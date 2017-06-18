@@ -35,6 +35,17 @@ define("PORTAL_KEY", "123");
 // For supported values, see http://php.net/manual/en/timezones.php
 define("TIMEZONE", "America/Denver");
 
+// See http://php.net/manual/en/function.date.php
+define("TIME_FORMAT", "g:i A"); // 12 hour time
+#define("TIME_FORMAT", "G:i"); // 24 hour time
+
+// Used in many places
+define("DATETIME_FORMAT", "M j Y g:i:s A"); // 12 hour time
+#define("DATETIME_FORMAT", "M j Y G:i:s"); // 24 hour time
+
+// Used on the clock widget
+define("LONG_DATE_FORMAT", "l F j");
+
 // Base URL for site links.
 define('URL', 'http://localhost/qwikclock');
 

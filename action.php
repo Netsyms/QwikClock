@@ -3,7 +3,6 @@
 /**
  * Make things happen when buttons are pressed and forms submitted.
  */
-
 require_once __DIR__ . "/required.php";
 
 dieifnotloggedin();
@@ -25,6 +24,10 @@ function returnToSender($msg, $arg = "") {
 }
 
 switch ($VARS['action']) {
+    case "time":
+        $out = ["status" => "OK", "time" => date(TIME_FORMAT), "date" => date(LONG_DATE_FORMAT), "seconds" => date("s")];
+        header('Content-Type: application/json');
+        exit(json_encode($out));
     case "signout":
         session_destroy();
         header('Location: index.php');

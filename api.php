@@ -31,6 +31,6 @@ switch ($VARS['action']) {
         $out = ["status" => "OK", "maxresults" => $max, "pong" => true];
         exit(json_encode($out));
     default:
-        header("HTTP/1.1 400 Bad Request");
-        die("\"400 Bad Request\"");
+        http_response_code(404);
+        die("\"404 Action not found\"");
 }

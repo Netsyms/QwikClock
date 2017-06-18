@@ -5,7 +5,10 @@ define("PAGES", [
     "home" => [
         "title" => "home",
         "navbar" => true,
-        "icon" => "home"
+        "icon" => "home",
+        "scripts" => [
+            "static/js/home.js"
+        ]
     ],
     "404" => [
         "title" => "404 error"

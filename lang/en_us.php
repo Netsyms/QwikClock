@@ -25,4 +25,7 @@ define("STRINGS", [
     "login server user data error" => "The login server refused to provide account information.  Try again or contact technical support.",
     "captcha error" => "There was a problem with the CAPTCHA (robot test).  Try again.",
     "home" => "Home",
+    "punch in out" => "Punch In/Out",
+    "you are punched in" => "You are punched in.",
+    "you are not punched in" => "You are not on the clock."
 ]);

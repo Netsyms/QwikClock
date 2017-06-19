@@ -1,5 +1,10 @@
+<?php
+require_once __DIR__ . '/../required.php';
+
+redirectifnotloggedin();
+?>
 <div class="row">
-    
+
     <div class="col-xs-12 col-sm-6 col-md-4 col-md-offset-2">
         <div class="panel panel-default">
             <div class="panel-body" style="text-align: center;">
@@ -26,13 +31,12 @@
                 <a href="action.php?source=home&action=punchout" class="btn btn-block btn-danger btn-lg"><i class="fa fa-stop"></i> <?php lang("punch out"); ?></a>
             </div>
             <div class="panel-footer">
-                <i class="fa fa-info-circle"></i> <?php
-                if ($database->has('punches', ['AND' => ['uid' => $_SESSION['uid'], 'out' => null]])) {
-                    lang("you are punched in");
-                } else {
-                    lang("you are not punched in");
-                }
+                <?php
+                $in = $database->has('punches', ['AND' => ['uid' => $_SESSION['uid'], 'out' => null]]) === TRUE;
                 ?>
+                <i class="fa fa-info-circle"></i> <span id="inmsg"<?php echo ($in ? '' : ' style="display: none;"') ?>><?php lang("you are punched in"); ?></span><span id="outmsg"<?php echo ($in ? ' style="display: none;"' : '') ?>><?php lang("you are not punched in"); ?></span>
+                <br />
+                <a href="app.php?page=punches" style="color: #01579b;"><i class="fa fa-arrow-right"></i> <?php lang("view punch card"); ?></a>
             </div>
         </div>
     </div>

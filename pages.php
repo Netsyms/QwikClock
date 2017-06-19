@@ -12,5 +12,18 @@ define("PAGES", [
     ],
     "404" => [
         "title" => "404 error"
-    ]
+    ],
+    "punches" => [
+        "title" => "punch card",
+        "navbar" => true,
+        "icon" => "clock-o",
+        "styles" => [
+            "static/css/datatables.min.css",
+            "static/css/tables.css"
+        ],
+        "scripts" => [
+            "static/js/datatables.min.js",
+            "static/js/punches.js"
+        ]
+    ],
 ]);

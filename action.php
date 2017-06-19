@@ -40,6 +40,11 @@ switch ($VARS['action']) {
         $out = ["status" => "OK", "time" => date(TIME_FORMAT), "date" => date(LONG_DATE_FORMAT), "seconds" => date("s")];
         header('Content-Type: application/json');
         exit(json_encode($out));
+    case "getinoutstatus":
+        $in = $database->has('punches', ['AND' => ['uid' => $_SESSION['uid'], 'out' => null]]) === TRUE;
+        $out = ["status" => "OK", "in" => $in];
+        header('Content-Type: application/json');
+        exit(json_encode($out));
     case "signout":
         session_destroy();
         header('Location: index.php');

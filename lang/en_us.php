@@ -31,5 +31,11 @@ define("STRINGS", [
     "already punched in" => "You are already on the clock.",
     "already punched out" => "You are already punched out.",
     "punched in" => "You are now on the clock.",
-    "punched out" => "You are now off the clock."
+    "punched out" => "You are now off the clock.",
+    "punch card" => "Punch Card",
+    "in" => "In",
+    "out" => "Out",
+    "notes" => "Notes",
+    "view punch card" => "View punch card",
+    "na" => "N/A"
 ]);

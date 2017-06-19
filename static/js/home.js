@@ -13,6 +13,7 @@ function setClock() {
             }
             console.log(interval);
             console.log((((seconds + interval) / 60) * 100));
+
             $('#seconds_bar div').animate({
                 width: (((seconds + interval) / 60) * 100) + "%"
             }, 1000 * interval, "linear", function () {
@@ -30,7 +31,25 @@ function setClock() {
     });
 }
 
+function setInOut() {
+    $.getJSON("action.php", {
+        action: "getinoutstatus"
+    }, function (resp) {
+        if (resp.status == "OK") {
+            if (resp.in) {
+                $('#inmsg').css('display', 'initial');
+                $('#outmsg').css('display', 'none');
+            } else {
+                $('#inmsg').css('display', 'none');
+                $('#outmsg').css('display', 'initial');
+            }
+        }
+    });
+}
+
 $(document).ready(function () {
+    jQuery.fx.interval = 250;
     setClock();
     setInterval(setClock, 5000);
+    setInterval(setInOut, 5000);
 });

@@ -26,6 +26,8 @@ define("STRINGS", [
     "captcha error" => "There was a problem with the CAPTCHA (robot test).  Try again.",
     "home" => "Home",
     "punch in out" => "Punch In/Out",
+    "punch in" => "Punch in",
+    "punch out" => "Punch out",
     "you are punched in" => "You are punched in.",
     "you are not punched in" => "You are not on the clock.",
     "already punched in" => "You are already on the clock.",

@@ -30,6 +30,18 @@ switch ($VARS['action']) {
     case "ping":
         $out = ["status" => "OK", "maxresults" => $max, "pong" => true];
         exit(json_encode($out));
+    case "punchin":
+        if ($database->has('punches', ['AND' => ['uid' => $userinfo['uid'], 'out' => null]])) {
+            die(json_encode(["status" => "ERROR", "msg" => lang("already punched in", false)]));
+        }
+        $database->insert('punches', ['uid' => $userinfo['uid'], 'in' => date("Y-m-d H:i:s"), 'out' => null, 'notes' => '']);
+        exit(json_encode(["status" => "OK", "msg" => lang("punched in", false)]));
+    case "punchout":
+        if (!$database->has('punches', ['AND' => ['uid' => $userinfo['uid'], 'out' => null]])) {
+            die(json_encode(["status" => "ERROR", "msg" => lang("already punched out", false)]));
+        }
+        $database->update('punches', ['uid' => $userinfo['uid'], 'out' => date("Y-m-d H:i:s")], ['out' => null]);
+        exit(json_encode(["status" => "OK", "msg" => lang("punched out", false)]));
     default:
         http_response_code(404);
         die("\"404 Action not found\"");

@@ -27,5 +27,9 @@ define("STRINGS", [
     "home" => "Home",
     "punch in out" => "Punch In/Out",
     "you are punched in" => "You are punched in.",
-    "you are not punched in" => "You are not on the clock."
+    "you are not punched in" => "You are not on the clock.",
+    "already punched in" => "You are already on the clock.",
+    "already punched out" => "You are already punched out.",
+    "punched in" => "You are now on the clock.",
+    "punched out" => "You are now off the clock."
 ]);

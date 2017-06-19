@@ -1,6 +1,6 @@
 function setClock() {
     $.getJSON("action.php", {
-        action: "time"
+        action: "gettime"
     }, function (resp) {
         if (resp.status == "OK") {
             $('#server_time').text(resp.time);
@@ -27,15 +27,6 @@ function setClock() {
                 }
             });
         }
-    });
-}
-
-function setSeconds() {
-    //$('#seconds_bar div').css("width", ((seconds / 60) * 100) + "%");
-    $('#seconds_bar div').animate({
-        width: ((seconds / 60) * 100) + "%"
-    }, 1000, "linear", function () {
-        seconds++;
     });
 }
 

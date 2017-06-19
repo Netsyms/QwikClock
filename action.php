@@ -24,7 +24,19 @@ function returnToSender($msg, $arg = "") {
 }
 
 switch ($VARS['action']) {
-    case "time":
+    case "punchin":
+        if ($database->has('punches', ['AND' => ['uid' => $_SESSION['uid'], 'out' => null]])) {
+            returnToSender("already_in");
+        }
+        $database->insert('punches', ['uid' => $_SESSION['uid'], 'in' => date("Y-m-d H:i:s"), 'out' => null, 'notes' => '']);
+        returnToSender("punched_in");
+    case "punchout":
+        if (!$database->has('punches', ['AND' => ['uid' => $_SESSION['uid'], 'out' => null]])) {
+            returnToSender("already_out");
+        }
+        $database->update('punches', ['uid' => $_SESSION['uid'], 'out' => date("Y-m-d H:i:s")], ['out' => null]);
+        returnToSender("punched_out");
+    case "gettime":
         $out = ["status" => "OK", "time" => date(TIME_FORMAT), "date" => date(LONG_DATE_FORMAT), "seconds" => date("s")];
         header('Content-Type: application/json');
         exit(json_encode($out));

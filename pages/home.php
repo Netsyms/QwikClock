@@ -21,9 +21,9 @@
                 </h3>
             </div>
             <div class="panel-body">
-                <a href="action.php?action=punchin" class="btn btn-block btn-success btn-lg"><i class="fa fa-play"></i> <?php lang("punch in"); ?></a>
+                <a href="action.php?source=home&action=punchin" class="btn btn-block btn-success btn-lg"><i class="fa fa-play"></i> <?php lang("punch in"); ?></a>
                 <br />
-                <a href="action.php?action=punchout" class="btn btn-block btn-danger btn-lg"><i class="fa fa-stop"></i> <?php lang("punch out"); ?></a>
+                <a href="action.php?source=home&action=punchout" class="btn btn-block btn-danger btn-lg"><i class="fa fa-stop"></i> <?php lang("punch out"); ?></a>
             </div>
             <div class="panel-footer">
                 <i class="fa fa-info-circle"></i> <?php

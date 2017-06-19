@@ -12,5 +12,21 @@ define("MESSAGES", [
     "404_error" => [
         "string" => "page not found",
         "type" => "info"
+    ],
+    "already_in" => [
+        "string" => "already punched in",
+        "type" => "danger"
+    ],
+    "already_out" => [
+        "string" => "already punched out",
+        "type" => "danger"
+    ],
+    "punched_in" => [
+        "string" => "punched in",
+        "type" => "success"
+    ],
+    "punched_out" => [
+        "string" => "punched out",
+        "type" => "success"
     ]
 ]);

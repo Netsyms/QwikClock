@@ -5,6 +5,7 @@ define("STRINGS", [
     "username" => "Username",
     "password" => "Password",
     "continue" => "Continue",
+    "no admin permission" => "You do not have permission to access this system.",
     "authcode" => "Authentication code",
     "2fa prompt" => "Enter the six-digit code from your mobile authenticator app.",
     "2fa incorrect" => "Authentication code incorrect.",

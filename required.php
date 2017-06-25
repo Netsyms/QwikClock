@@ -186,6 +186,11 @@ if (!function_exists('base_url')) {
 function redirectIfNotLoggedIn() {
     if ($_SESSION['loggedin'] !== TRUE) {
         header('Location: ' . URL . '/index.php');
-        die();
+        die("You are not logged in.");
+    }
+    require_once __DIR__ . "/lib/login.php";
+    if (account_has_permission($_SESSION['username'], "QWIKCLOCK") == FALSE) {
+        header('Location: ./index.php');
+        die("You don't have permission to be here.");
     }
 }

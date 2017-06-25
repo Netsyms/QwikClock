@@ -4,8 +4,13 @@
  * Make things happen when buttons are pressed and forms submitted.
  */
 require_once __DIR__ . "/required.php";
+require_once __DIR__ . "/lib/login.php";
 
 dieifnotloggedin();
+
+if (account_has_permission($_SESSION['username'], "QWIKCLOCK") == FALSE) {
+    die("You don't have permission to be here.");
+}
 
 /**
  * Redirects back to the page ID in $_POST/$_GET['source'] with the given message ID.

@@ -36,7 +36,7 @@ redirectifnotloggedin();
                 ?>
                 <i class="fa fa-info-circle"></i> <span id="inmsg"<?php echo ($in ? '' : ' style="display: none;"') ?>><?php lang("you are punched in"); ?></span><span id="outmsg"<?php echo ($in ? ' style="display: none;"' : '') ?>><?php lang("you are not punched in"); ?></span>
                 <br />
-                <a href="app.php?page=punches" style="color: #01579b;"><i class="fa fa-arrow-right"></i> <?php lang("view punch card"); ?></a>
+                <a href="app.php?page=punches#punches" style="color: #01579b;"><i class="fa fa-arrow-right"></i> <?php lang("view punch card"); ?></a>
             </div>
         </div>
     </div>

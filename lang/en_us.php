@@ -41,6 +41,8 @@ define("STRINGS", [
     "notes" => "Notes",
     "view punch card" => "View punch card",
     "na" => "N/A",
-    "this week" => "This week",
-    "x on the clock" => "{time} on the clock"
+    "this week" => "This Week",
+    "x on the clock" => "{time} on the clock",
+    "x punches" => "{count} punches",
+    "history" => "History"
 ]);

@@ -14,7 +14,7 @@ define("PAGES", [
         "title" => "404 error"
     ],
     "punches" => [
-        "title" => "punch card",
+        "title" => "history",
         "navbar" => true,
         "icon" => "clock-o",
         "styles" => [

@@ -2,33 +2,49 @@
 require_once __DIR__ . '/../required.php';
 
 redirectifnotloggedin();
+
+
+require_once __DIR__ . "/../lib/dates.php";
+$weekstart = sqldatetime(getstartofweek(WEEK_START));
+$punches = $database->select('punches', ['in', 'out'], ['AND' => ['uid' => $_SESSION['uid'], 'in[>]' => $weekstart]]);
+$punchtimes = [];
+foreach ($punches as $p) {
+    $punchtimes[] = [$p['in'], $p['out']];
+}
+$totalseconds = sumelapsedtimearray($punchtimes);
+$totalpunches = count($punches);
 ?>
+<p class="page-header h5"><i class="fa fa-calendar fa-fw"></i> <?php lang("this week") ?></p>
 <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-4">
+
+    <div class="col-xs-12 col-sm-6 col-md-4 col-md-offset-2">
         <div class="panel panel-blue">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                    <i class="fa fa-clock-o"></i> <?php lang("this week"); ?>
-                </h3>
-            </div>
             <div class="panel-body">
                 <h4>
                     <?php
-                    require_once __DIR__ . "/../lib/dates.php";
-                    $weekstart = sqldatetime(getstartofweek(WEEK_START));
-                    $punches = $database->select('punches', ['in', 'out'], ['AND' => ['uid' => $_SESSION['uid'], 'in[>]' => $weekstart]]);
-                    $punchtimes = [];
-                    foreach ($punches as $p) {
-                        $punchtimes[] = [$p['in'], $p['out']];
-                    }
-                    $totalseconds = sumelapsedtimearray($punchtimes);
                     lang2("x on the clock", ["time" => seconds2string($totalseconds, false)]);
                     ?>
                 </h4>
             </div>
         </div>
     </div>
+    
+    <div class="col-xs-12 col-sm-6 col-md-4">
+        <div class="panel panel-blue">
+            <div class="panel-body">
+                <h4>
+                    <?php
+                    lang2("x punches", ["count" => $totalpunches]);
+                    ?>
+                </h4>
+            </div>
+        </div>
+    </div>
 </div>
+
+<a id="punches" style="height: 0px; width: 0px;">&nbsp;</a>
+
+<p class="page-header h5"><i class="fa fa-clock-o fa-fw"></i> <?php lang("punch card") ?></p>
 <table id="punchtable" class="table table-bordered table-striped">
     <thead>
         <tr>

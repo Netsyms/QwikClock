@@ -40,5 +40,7 @@ define("STRINGS", [
     "out" => "Out",
     "notes" => "Notes",
     "view punch card" => "View punch card",
-    "na" => "N/A"
+    "na" => "N/A",
+    "this week" => "This week",
+    "x on the clock" => "{time} on the clock"
 ]);

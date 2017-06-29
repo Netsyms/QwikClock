@@ -35,7 +35,7 @@ if (checkLoginServer()) {
                 }
                 if ($userpass_ok) {
                     if (account_has_permission($VARS['username'], "QWIKCLOCK") == FALSE) {
-                        $alert = lang("no admin permission", false);
+                        $alert = lang("no permission", false);
                     } else {
                         $_SESSION['passok'] = true; // stop logins using only username and authcode
                         if (userHasTOTP($VARS['username'])) {

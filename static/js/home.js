@@ -7,12 +7,12 @@ function setClock() {
             $('#server_date').text(resp.date);
             var seconds = resp.seconds * 1;
             var interval = 60 - seconds;
-            console.log(interval);
+            //console.log(interval);
             if (interval > 5) {
                 interval = 5;
             }
-            console.log(interval);
-            console.log((((seconds + interval) / 60) * 100));
+            //console.log(interval);
+            //console.log((((seconds + interval) / 60) * 100));
 
             $('#seconds_bar div').animate({
                 width: (((seconds + interval) / 60) * 100) + "%"

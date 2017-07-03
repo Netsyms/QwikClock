@@ -53,7 +53,7 @@ if (!is_empty($_GET['page'])) {
                     ?>
                 </div>
             </div>
-            <nav class="navbar navbar-inverse navbar-<?php echo MENU_BAR_STYLE; ?>-top">
+            <nav class="navbar navbar-inverse navbar-blue navbar-<?php echo MENU_BAR_STYLE; ?>-top">
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">

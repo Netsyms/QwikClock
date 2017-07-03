@@ -26,4 +26,17 @@ define("PAGES", [
             "static/js/punches.js"
         ]
     ],
+    "shifts" => [
+        "title" => "shifts",
+        "navbar" => true,
+        "icon" => "calendar",
+        "styles" => [
+            "static/css/datatables.min.css",
+            "static/css/tables.css"
+        ],
+        "scripts" => [
+            "static/js/datatables.min.js",
+            "static/js/shifts.js"
+        ]
+    ],
 ]);

@@ -1,4 +1,4 @@
-$('#punchtable').DataTable({
+var punchtable = $('#punchtable').DataTable({
     responsive: {
         details: {
             display: $.fn.dataTable.Responsive.display.modal({
@@ -20,15 +20,22 @@ $('#punchtable').DataTable({
             orderable: false
         },
         {
-            targets: 3,
+            targets: 4,
             orderable: false
         }
     ],
     order: [
-        [1, 'desc']
+        [2, 'desc']
     ],
     serverSide: true,
     ajax: {
-        url: "lib/getpunchtable.php"
+        url: "lib/getpunchtable.php",
+        data: function (d) {
+            if ($('#show_all_checkbox').is(':checked')) {
+                d.show_all = 1;
+            }
+        },
     }
 });
+
+$('#punchtable_filter').append("<div class=\"checkbox\" style=\"display: inline-block\"><label><input type=\"checkbox\" id=\"show_all_checkbox\" onclick=\"punchtable.ajax.reload()\"> " + lang_show_all_punches + "</label></div>");

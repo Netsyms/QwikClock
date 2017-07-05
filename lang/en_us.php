@@ -45,5 +45,7 @@ define("STRINGS", [
     "x on the clock" => "{time} on the clock",
     "x punches" => "{count} punches",
     "history" => "History",
-    "shifts" => "Shifts"
+    "shifts" => "Shifts",
+    "show all punches" => "Show other users",
+    "name" => "Name"
 ]);

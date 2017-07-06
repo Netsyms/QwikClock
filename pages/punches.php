@@ -49,10 +49,10 @@ $totalpunches = count($punches);
     <thead>
         <tr>
             <th data-priority="0"></th>
-            <th data-priority="2"><i class="fa fa-fw fa-user"></i> <?php lang('name'); ?></th>
-            <th data-priority="1"><i class="fa fa-fw fa-play"></i> <?php lang('in'); ?></th>
-            <th data-priority="1"><i class="fa fa-fw fa-stop"></i> <?php lang('out'); ?></th>
-            <th data-priority="2"><i class="fa fa-fw fa-sticky-note-o"></i> <?php lang('notes'); ?></th>
+            <th data-priority="2"><i class="fa fa-fw fa-user hidden-xs"></i> <?php lang('name'); ?></th>
+            <th data-priority="1"><i class="fa fa-fw fa-play hidden-xs"></i> <?php lang('in'); ?></th>
+            <th data-priority="1"><i class="fa fa-fw fa-stop hidden-xs"></i> <?php lang('out'); ?></th>
+            <th data-priority="2"><i class="fa fa-fw fa-sticky-note-o hidden-xs"></i> <?php lang('notes'); ?></th>
         </tr>
     </thead>
     <tbody>
@@ -61,10 +61,10 @@ $totalpunches = count($punches);
     <tfoot>
         <tr>
             <th data-priority="0"></th>
-            <th data-priority="2"><i class="fa fa-fw fa-user"></i> <?php lang('name'); ?></th>
-            <th data-priority="1"><i class="fa fa-fw fa-play"></i> <?php lang('in'); ?></th>
-            <th data-priority="1"><i class="fa fa-fw fa-stop"></i> <?php lang('out'); ?></th>
-            <th data-priority="2"><i class="fa fa-fw fa-sticky-note-o"></i> <?php lang('notes'); ?></th>
+            <th data-priority="2"><i class="fa fa-fw fa-user hidden-xs"></i> <?php lang('name'); ?></th>
+            <th data-priority="1"><i class="fa fa-fw fa-play hidden-xs"></i> <?php lang('in'); ?></th>
+            <th data-priority="1"><i class="fa fa-fw fa-stop hidden-xs"></i> <?php lang('out'); ?></th>
+            <th data-priority="2"><i class="fa fa-fw fa-sticky-note-o hidden-xs"></i> <?php lang('notes'); ?></th>
     </tfoot>
 </table>
 

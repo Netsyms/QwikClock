@@ -47,5 +47,16 @@ define("STRINGS", [
     "history" => "History",
     "shifts" => "Shifts",
     "show all punches" => "Show other users",
-    "name" => "Name"
+    "name" => "Name",
+    "start" => "Start",
+    "end" => "End",
+    "days" => "Days",
+    "sunday" => "Sunday",
+    "monday" => "Monday",
+    "tuesday" => "Tuesday",
+    "wednesday" => "Wednesday",
+    "thursday" => "Thursday",
+    "friday" => "Friday",
+    "saturday" => "Saturday",
+    "show all shifts" => "Show all shifts"
 ]);

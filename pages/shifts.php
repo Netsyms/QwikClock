@@ -16,10 +16,20 @@ $totalpunches = count($punches);
 ?>
 
 <p class="page-header h5"><i class="fa fa-clock-o fa-fw"></i> <?php lang("shifts") ?></p>
+<?php
+if (account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE")) {
+    ?>
+    <div class="btn-group" style="margin-bottom: 10px;">
+        <a href="app.php?page=editshift" class="btn btn-success"><i class="fa fa-calendar-plus-o"></i> <?php lang("new shift"); ?></a>
+    </div>
+    <?php
+}
+?>
 <table id="shifttable" class="table table-bordered table-striped">
     <thead>
         <tr>
             <th data-priority="0"></th>
+            <th data-priority="3"></th>
             <th data-priority="3"><i class="fa fa-fw fa-font hidden-xs"></i> <?php lang('name'); ?></th>
             <th data-priority="1"><i class="fa fa-fw fa-play hidden-xs"></i> <?php lang('start'); ?></th>
             <th data-priority="1"><i class="fa fa-fw fa-stop hidden-xs"></i> <?php lang('end'); ?></th>
@@ -32,6 +42,7 @@ $totalpunches = count($punches);
     <tfoot>
         <tr>
             <th data-priority="0"></th>
+            <th data-priority="3"></th>
             <th data-priority="3"><i class="fa fa-fw fa-font hidden-xs"></i> <?php lang('name'); ?></th>
             <th data-priority="1"><i class="fa fa-fw fa-play hidden-xs"></i> <?php lang('start'); ?></th>
             <th data-priority="1"><i class="fa fa-fw fa-stop hidden-xs"></i> <?php lang('end'); ?></th>

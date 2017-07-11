@@ -20,7 +20,11 @@ var shifttable = $('#shifttable').DataTable({
             orderable: false
         },
         {
-            targets: 4,
+            targets: 1,
+            orderable: false
+        },
+        {
+            targets: 5,
             orderable: false
         }
     ],

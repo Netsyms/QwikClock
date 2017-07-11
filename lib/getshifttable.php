@@ -98,11 +98,18 @@ if ($showall) {
             ], $where);
 }
 
+$showeditbtn = account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE");
+
 for ($i = 0; $i < count($shifts); $i++) {
     $shifts[$i][0] = "";
-    $shifts[$i][1] = $shifts[$i]['shiftname'];
-    $shifts[$i][2] = date(TIME_FORMAT, strtotime($shifts[$i]['start']));
-    $shifts[$i][3] = date(TIME_FORMAT, strtotime($shifts[$i]['end']));
+    if ($showeditbtn) {
+        $shifts[$i][1] = '<a class="btn btn-blue btn-xs" href="app.php?page=editshift&id=' . $shifts[$i]['shiftid'] . '"><i class="fa fa-pencil-square-o"></i> ' . lang("edit", false) . '</a>';
+    } else {
+        $shifts[$i][1] = "";
+    }
+    $shifts[$i][2] = $shifts[$i]['shiftname'];
+    $shifts[$i][3] = date(TIME_FORMAT, strtotime($shifts[$i]['start']));
+    $shifts[$i][4] = date(TIME_FORMAT, strtotime($shifts[$i]['end']));
     $days = [];
     $daycodes = str_split($shifts[$i]['days'], 2);
     foreach ($daycodes as $day) {
@@ -130,7 +137,7 @@ for ($i = 0; $i < count($shifts); $i++) {
                 break;
         }
     }
-    $shifts[$i][4] = "<span style=\"word-wrap: break-word;\">" . implode(", ", $days) . "</span>";
+    $shifts[$i][5] = "<span style=\"word-wrap: break-word;\">" . implode(", ", $days) . "</span>";
 }
 
 $out['status'] = "OK";
@@ -143,6 +150,7 @@ if ($filter) {
 } else {
     $recordsFiltered = $out['recordsTotal'];
 }
+
 $out['recordsFiltered'] = $recordsFiltered;
 $out['data'] = $shifts;
 

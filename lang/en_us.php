@@ -6,6 +6,7 @@ define("STRINGS", [
     "password" => "Password",
     "continue" => "Continue",
     "no permission" => "You do not have permission to access this system.",
+    "missing permission" => "You do not have permission to do that.",
     "authcode" => "Authentication code",
     "2fa prompt" => "Enter the six-digit code from your mobile authenticator app.",
     "2fa incorrect" => "Authentication code incorrect.",
@@ -58,5 +59,12 @@ define("STRINGS", [
     "thursday" => "Thursday",
     "friday" => "Friday",
     "saturday" => "Saturday",
-    "show all shifts" => "Show all shifts"
+    "show all shifts" => "Show all shifts",
+    "new shift" => "New Shift",
+    "edit shift" => "Edit Shift",
+    "shift added" => "Shift added.",
+    "shift saved" => "Shift saved.",
+    "invalid time format" => "Invalid time format.  Please use HH:MM or HH:MM AM.",
+    "shift name used" => "The shift name you gave is already in use.  Use a different name or edit the existing shift.",
+    "invalid shiftid" => "Invalid shift ID."
 ]);

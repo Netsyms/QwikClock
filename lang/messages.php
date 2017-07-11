@@ -28,5 +28,29 @@ define("MESSAGES", [
     "punched_out" => [
         "string" => "punched out",
         "type" => "success"
+    ],
+    "no_permission" => [
+        "string" => "missing permission",
+        "type" => "danger"
+    ],
+    "shift_added" => [
+        "string" => "shift added",
+        "type" => "success"
+    ],
+    "invalid_time" => [
+        "string" => "invalid time format",
+        "type" => "danger"
+    ],
+    "shift_saved" => [
+        "string" => "shift saved",
+        "type" => "success"
+    ],
+    "shift_name_used" => [
+        "string" => "shift name used",
+        "type" => "danger"
+    ],
+    "invalid_shiftid" => [
+        "string" => "invalid shiftid",
+        "type" => "danger"
     ]
 ]);

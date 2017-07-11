@@ -50,6 +50,52 @@ switch ($VARS['action']) {
         $out = ["status" => "OK", "in" => $in];
         header('Content-Type: application/json');
         exit(json_encode($out));
+    case "editshift":
+        if (account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE")) {
+            $valid_daycodes = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+
+            $name = htmlentities($VARS['shiftname']);
+            $start = $VARS['start'];
+            $end = $VARS['end'];
+            $days = $VARS['days'];
+
+            $startepoch = strtotime($start);
+            if ($startepoch === false) {
+                returnToSender("invalid_time");
+            }
+            $startformatted = date("H:i:s", $startepoch);
+
+            $endepoch = strtotime($end);
+            if ($endepoch === false) {
+                returnToSender("invalid_time");
+            }
+            $endformatted = date("H:i:s", $endepoch);
+
+            // Parse days into string, validating along the way
+            $daystring = "";
+            foreach ($days as $d) {
+                if (in_array($d, $valid_daycodes)) {
+                    if (strpos($daystring, $d) === FALSE) {
+                        $daystring .= $d;
+                    }
+                }
+            }
+
+            if (is_empty($VARS['shiftid'])) {
+                if ($database->has('shifts', ['shiftname' => $name])) {
+                    returnToSender("shift_name_used");
+                }
+                $database->insert('shifts', ["shiftname" => $name, "start" => $startformatted, "end" => $endformatted, "days" => $daystring]);
+                returnToSender("shift_added");
+            } else if ($database->has('shifts', ['shiftid' => $VARS['shiftid']])) {
+                $database->update('shifts', ["shiftname" => $name, "start" => $startformatted, "end" => $endformatted, "days" => $daystring], ["shiftid" => $VARS['shiftid']]);
+                returnToSender("shift_saved");
+            } else {
+                returnToSender("invalid_shiftid");
+            }
+        } else {
+            returnToSender("no_permission");
+        }
     case "signout":
         session_destroy();
         header('Location: index.php');

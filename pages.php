@@ -39,4 +39,16 @@ define("PAGES", [
             "static/js/shifts.js"
         ]
     ],
+    "editshift" => [
+        "title" => "new shift",
+        "navbar" => false,
+        "styles" => [
+            "static/css/bootstrap-datetimepicker.min.css"
+        ],
+        "scripts" => [
+            "static/js/moment.min.js",
+            "static/js/bootstrap-datetimepicker.min.js",
+            "static/js/addshift.js"
+        ]
+    ],
 ]);

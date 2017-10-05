@@ -51,4 +51,16 @@ define("PAGES", [
             "static/js/addshift.js"
         ]
     ],
+    "assignshift" => [
+        "title" => "assign shift",
+        "navbar" => false,
+        "styles" => [
+            "static/css/easy-autocomplete.min.css"
+        ],
+        "scripts" => [
+            "static/js/jquery.easy-autocomplete.min.js",
+            "static/js/jquery.color-2.1.2.min.js",
+            "static/js/assignshift.js"
+        ]
+    ],
 ]);

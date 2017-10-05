@@ -120,3 +120,33 @@ function getManagedUIDs($manageruid) {
         return [];
     }
 }
+
+/**
+ * Get an array of username the given UID is a manager of.
+ * @param int $manageruid The UID of the manager to find employees for.
+ * @return [int]
+ */
+function getManagedUsernames($manageruid) {
+    $client = new GuzzleHttp\Client();
+
+    $response = $client
+            ->request('POST', PORTAL_API, [
+        'form_params' => [
+            'key' => PORTAL_KEY,
+            'action' => "getmanaged",
+            'uid' => $manageruid,
+            'get' => "username"
+        ]
+    ]);
+
+    if ($response->getStatusCode() > 299) {
+        sendError("Login server error: " . $response->getBody());
+    }
+
+    $resp = json_decode($response->getBody(), TRUE);
+    if ($resp['status'] == "OK") {
+        return $resp['employees'];
+    } else {
+        return [];
+    }
+}

@@ -96,6 +96,58 @@ switch ($VARS['action']) {
         } else {
             returnToSender("no_permission");
         }
+    case "assignshift":
+        if (!account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE")) {
+            returnToSender("no_permission");
+        }
+        if (!$database->has('shifts', ['shiftid' => $VARS['shift']])) {
+            returnToSender("invalid_shiftid");
+        }
+        $already_assigned = $database->select('assigned_shifts', 'uid', ['shiftid' => $VARS['shift']]);
+        require_once __DIR__ . "/lib/userinfo.php";
+        $managedusers = getManagedUsernames($_SESSION['uid']);
+        foreach ($VARS['users'] as $u) {
+            if (!account_has_permission($_SESSION['username'], "ADMIN")) {
+                if (!in_array($u, $managedusers)) {
+                    returnToSender("you_arent_my_supervisor", htmlentities($u));
+                }
+            }
+            if (!user_exists($u)) {
+                returnToSender("user_not_exists", htmlentities($u));
+            }
+            $uid = getUserByUsername($u)['uid'];
+            $database->insert('assigned_shifts', ['uid' => $uid, 'shiftid' => $VARS['shift']]);
+            $already_assigned = array_diff($already_assigned, [$uid]); // Remove user from old list
+        }
+        foreach ($already_assigned as $uid) {
+            $database->delete('assigned_shifts', ["AND" => ['uid' => $uid, 'shiftid' => $VARS['shift']]]);
+        }
+        returnToSender("shift_assigned");
+        break;
+    case "autocomplete_user":
+        header("Content-Type: application/json");
+        $client = new GuzzleHttp\Client();
+
+        $response = $client
+                ->request('POST', PORTAL_API, [
+            'form_params' => [
+                'key' => PORTAL_KEY,
+                'action' => "usersearch",
+                'search' => $VARS['q']
+            ]
+        ]);
+
+        if ($response->getStatusCode() != 200) {
+            exit("[]");
+        }
+
+        $resp = json_decode($response->getBody(), TRUE);
+        if ($resp['status'] == "OK") {
+            exit(json_encode($resp['result']));
+        } else {
+            exit("[]");
+        }
+        break;
     case "signout":
         session_destroy();
         header('Location: index.php');

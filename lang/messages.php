@@ -52,5 +52,13 @@ define("MESSAGES", [
     "invalid_shiftid" => [
         "string" => "invalid shiftid",
         "type" => "danger"
+    ],
+    "you_arent_my_supervisor" => [
+        "string" => "you are not the manager of user",
+        "type" => "danger"
+    ],
+    "shift_assigned" => [
+        "string" => "shift assigned",
+        "type" => "success"
     ]
 ]);

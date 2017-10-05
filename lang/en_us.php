@@ -66,5 +66,12 @@ define("STRINGS", [
     "shift saved" => "Shift saved.",
     "invalid time format" => "Invalid time format.  Please use HH:MM or HH:MM AM.",
     "shift name used" => "The shift name you gave is already in use.  Use a different name or edit the existing shift.",
-    "invalid shiftid" => "Invalid shift ID."
+    "invalid shiftid" => "Invalid shift ID.",
+    "you are not the manager of user" => "You are not the manager of {arg}.",
+    "assign shift" => "Assign Shift",
+    "shift" => "Shift",
+    "people" => "People",
+    "type to add a person" => "Start typing to add a person",
+    "add" => "Add",
+    "choose a shift" => "Choose a shift"
 ]);

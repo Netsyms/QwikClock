@@ -27,7 +27,7 @@ if (!is_empty($_GET['page'])) {
 
         <link href="static/css/bootstrap.min.css" rel="stylesheet">
         <link href="static/css/font-awesome.min.css" rel="stylesheet">
-        <link href="static/css/material-color.min.css" rel="stylesheet">
+        <link href="static/css/material-color/material-color.min.css" rel="stylesheet">
         <link href="static/css/app.css" rel="stylesheet">
         <?php
         // custom page styles
@@ -53,7 +53,7 @@ if (!is_empty($_GET['page'])) {
                     ?>
                 </div>
             </div>
-            <nav class="navbar navbar-inverse navbar-blue navbar-<?php echo MENU_BAR_STYLE; ?>-top">
+            <nav class="navbar navbar-default navbar-blue navbar-<?php echo MENU_BAR_STYLE; ?>-top">
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">

@@ -38,4 +38,8 @@ var punchtable = $('#punchtable').DataTable({
     }
 });
 
-$('#punchtable_filter').append("<div class=\"checkbox\" style=\"display: inline-block\"><label><input type=\"checkbox\" id=\"show_all_checkbox\" onclick=\"punchtable.ajax.reload()\"> " + lang_show_all_punches + "</label></div>");
+$('#punchtable_filter').append("<div class=\"checkbox inblock\"><label><input type=\"checkbox\" id=\"show_all_checkbox\"> " + lang_show_all_punches + "</label></div>");
+
+$('#show_all_checkbox').click(function () {
+    punchtable.ajax.reload();
+});

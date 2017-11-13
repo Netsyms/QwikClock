@@ -42,4 +42,8 @@ var shifttable = $('#shifttable').DataTable({
     }
 });
 
-$('#shifttable_filter').append("<div class=\"checkbox\" style=\"display: inline-block\"><label><input type=\"checkbox\" id=\"show_all_checkbox\" onclick=\"shifttable.ajax.reload()\"> " + lang_show_all_shifts + "</label></div>");
+$('#shifttable_filter').append("<div class=\"checkbox inblock\"><label><input type=\"checkbox\" id=\"show_all_checkbox\"> " + lang_show_all_shifts + "</label></div>");
+
+$('#show_all_checkbox').click(function () {
+    shifttable.ajax.reload();
+});

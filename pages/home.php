@@ -7,12 +7,17 @@ redirectifnotloggedin();
 
     <div class="col-xs-12 col-sm-6 col-md-4 col-md-offset-2">
         <div class="panel panel-default">
-            <div class="panel-body" style="text-align: center;">
+            <div class="panel-body text-center">
                 <h2 id="server_time"><?php echo date(TIME_FORMAT); ?></h2>
                 <h4 id="server_date"><?php echo date(LONG_DATE_FORMAT); ?></h4>
             </div>
-            <div id="seconds_bar" style="width: 100%; height: 5px; padding-bottom: 5px;">
-                <div style="background-color: #ffc107; height: 5px; width: <?php echo round(date('s') * 1 / 60 * 100, 4); ?>%;"></div>
+            <div id="seconds_bar">
+                <style nonce="<?php echo $SECURE_NONCE; ?>">
+                    #seconds_bar_line {
+                        width: <?php echo round(date('s') * 1 / 60 * 100, 4); ?>%;
+                    }
+                </style>
+                <div id="seconds_bar_line"></div>
             </div>
         </div>
     </div>
@@ -34,9 +39,22 @@ redirectifnotloggedin();
                 <?php
                 $in = $database->has('punches', ['AND' => ['uid' => $_SESSION['uid'], 'out' => null]]) === TRUE;
                 ?>
-                <i class="fa fa-info-circle"></i> <span id="inmsg"<?php echo ($in ? '' : ' style="display: none;"') ?>><?php lang("you are punched in"); ?></span><span id="outmsg"<?php echo ($in ? ' style="display: none;"' : '') ?>><?php lang("you are not punched in"); ?></span>
+                <i class="fa fa-info-circle"></i> 
+                <span id="inmsg"><?php lang("you are punched in"); ?></span>
+                <span id="outmsg"><?php lang("you are not punched in"); ?></span>
+                <style nonce="<?php echo $SECURE_NONCE; ?>">
+                    <?php if ($in) { ?>
+                    #outmsg {
+                        display: none;
+                    }
+                    <?php } else { ?>
+                    #inmsg {
+                        display: none;
+                    }
+                    <?php } ?>
+                </style>
                 <br />
-                <a href="app.php?page=punches#punches" style="color: #01579b;"><i class="fa fa-arrow-right"></i> <?php lang("view punch card"); ?></a>
+                <a class="dark-text" href="app.php?page=punches#punches" ><i class="fa fa-arrow-right"></i> <?php lang("view punch card"); ?></a>
             </div>
         </div>
     </div>

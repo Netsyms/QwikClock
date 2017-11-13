@@ -42,7 +42,7 @@ $totalpunches = count($punches);
     </div>
 </div>
 
-<a id="punches" style="height: 0px; width: 0px;">&nbsp;</a>
+<a id="punches">&nbsp;</a>
 
 <p class="page-header h5"><i class="fa fa-clock-o fa-fw"></i> <?php lang("punch card") ?></p>
 <table id="punchtable" class="table table-bordered table-striped">
@@ -68,7 +68,7 @@ $totalpunches = count($punches);
     </tfoot>
 </table>
 
-<script>
+<script nonce="<?php echo $SECURE_NONCE; ?>">
     /* Give JavaScript access to the lang string
      * it needs to inject the show deleted checkbox
      */

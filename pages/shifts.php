@@ -19,7 +19,7 @@ $totalpunches = count($punches);
 <?php
 if (account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE")) {
     ?>
-    <div class="btn-group" style="margin-bottom: 10px;">
+    <div class="btn-group mgn-btm-10px">
         <a href="app.php?page=editshift" class="btn btn-success"><i class="fa fa-calendar-plus-o"></i> <?php lang("new shift"); ?></a>
         <a href="app.php?page=assignshift" class="btn btn-info"><i class="fa fa-calendar-check-o"></i> <?php lang("assign shift"); ?></a>
     </div>
@@ -51,7 +51,7 @@ if (account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE")) {
     </tfoot>
 </table>
 
-<script>
+<script nonce="<?php echo $SECURE_NONCE; ?>">
     /* Give JavaScript access to the lang string
      * it needs to inject the filter checkbox
      */

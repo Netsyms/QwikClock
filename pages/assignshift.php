@@ -65,7 +65,7 @@ if ($VARS['shift'] && $database->has('shifts', ['shiftid' => $VARS['shift']])) {
                             foreach ($assigned as $user) {
                                 ?>
                                 <div class="list-group-item" data-user="<?php echo $user; ?>">
-                                    <?php echo $user; ?> <div onclick="removePerson('<?php echo $user; ?>')" class="btn btn-danger btn-sm pull-right"><i class="fa fa-trash-o"></i></div><input type="hidden" name="users[]" value="<?php echo $user; ?>" />
+                                    <?php echo $user; ?> <div class="btn btn-danger btn-sm pull-right rmperson"><i class="fa fa-trash-o"></i></div><input type="hidden" name="users[]" value="<?php echo $user; ?>" />
                                 </div>
                                 <?php
                             }

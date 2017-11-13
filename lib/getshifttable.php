@@ -137,7 +137,7 @@ for ($i = 0; $i < count($shifts); $i++) {
                 break;
         }
     }
-    $shifts[$i][5] = "<span style=\"word-wrap: break-word;\">" . implode(", ", $days) . "</span>";
+    $shifts[$i][5] = "<span class=\"wrap-break-word\">" . implode(", ", $days) . "</span>";
 }
 
 $out['status'] = "OK";

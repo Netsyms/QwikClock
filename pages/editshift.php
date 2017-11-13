@@ -61,9 +61,9 @@ if (isset($VARS['id']) && $database->has('shifts', ['shiftid' => $VARS['id']])) 
                 <div class="col-xs-12 col-md-6">
                     <div class="form-group">
                         <label for="days"><i class="fa fa-calendar"></i> <?php lang("days"); ?></label>
-                        <div style="padding-top: 8px;">
-                            <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
-                                <div class="checkbox" style="margin-top: -6px;">
+                        <div id="days-list-container">
+                            <div id="days-list">
+                                <div class="checkbox">
                                     <label>
                                         <input type="checkbox" name="days[]" value="Su" <?php if (strpos($data['days'], "Su") !== FALSE) echo "checked"; ?>> <?php lang('sunday'); ?>
                                     </label>

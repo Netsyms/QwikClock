@@ -16,16 +16,20 @@ $totalpunches = count($punches);
 ?>
 
 <p class="page-header h5"><i class="fa fa-clock-o fa-fw"></i> <?php lang("shifts") ?></p>
-<?php
-if (account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE")) {
-    ?>
-    <div class="btn-group mgn-btm-10px">
+
+<div class="btn-group mgn-btm-10px">
+    <?php
+    if (account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE")) {
+        ?>
         <a href="app.php?page=editshift" class="btn btn-success"><i class="fa fa-calendar-plus-o"></i> <?php lang("new shift"); ?></a>
         <a href="app.php?page=assignshift" class="btn btn-info"><i class="fa fa-calendar-check-o"></i> <?php lang("assign shift"); ?></a>
-    </div>
-    <?php
-}
-?>
+        <?php
+    }
+    ?>
+    <span class="btn btn-grey" id="show_btn" data-showall=""><i class="fa fa-filter"></i> <span><?php lang("show all shifts") ?></span></span>
+</div>
+<div class="text-grey" id="showing-all"><i class="fa fa-info-circle"></i> <?php lang("showing all shifts"); ?></div>
+
 <table id="shifttable" class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -56,4 +60,5 @@ if (account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE")) {
      * it needs to inject the filter checkbox
      */
     var lang_show_all_shifts = "<?php lang("show all shifts") ?>";
+    var lang_show_my_shifts = "<?php lang("show only my shifts") ?>";
 </script>

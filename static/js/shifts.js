@@ -35,15 +35,24 @@ var shifttable = $('#shifttable').DataTable({
     ajax: {
         url: "lib/getshifttable.php",
         data: function (d) {
-            if ($('#show_all_checkbox').is(':checked')) {
+            if ($('#show_btn').data("showall") == 1) {
                 d.show_all = 1;
             }
         },
     }
 });
 
-$('#shifttable_filter').append("<div class=\"checkbox inblock\"><label><input type=\"checkbox\" id=\"show_all_checkbox\"> " + lang_show_all_shifts + "</label></div>");
-
-$('#show_all_checkbox').click(function () {
+$('#show_btn').click(function () {
+    if ($('#show_btn').data("showall") == 1) {
+        $('#show_btn').data("showall", "");
+        $('#showing-all').css("display", "none");
+        $('#show_btn span').text(lang_show_all_shifts);
+    } else {
+        $('#show_btn').data("showall", "1");
+        $('#showing-all').css("display", "inline-block");
+        $('#show_btn span').text(lang_show_my_shifts);
+    }
     shifttable.ajax.reload();
 });
+
+$('#showing-all').css("display", "none");

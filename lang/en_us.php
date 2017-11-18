@@ -60,6 +60,8 @@ define("STRINGS", [
     "friday" => "Friday",
     "saturday" => "Saturday",
     "show all shifts" => "Show all shifts",
+    "showing all shifts" => "Showing all shifts",
+    "show only my shifts" => "Show only my shifts",
     "new shift" => "New Shift",
     "edit shift" => "Edit Shift",
     "shift added" => "Shift added.",

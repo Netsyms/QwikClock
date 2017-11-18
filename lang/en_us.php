@@ -75,5 +75,6 @@ define("STRINGS", [
     "people" => "People",
     "type to add a person" => "Start typing to add a person",
     "add" => "Add",
-    "choose a shift" => "Choose a shift"
+    "choose a shift" => "Choose a shift",
+    "shift assigned" => "Shift assigned.",
 ]);

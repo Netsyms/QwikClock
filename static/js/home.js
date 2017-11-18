@@ -20,7 +20,7 @@ function setClock() {
                 if (interval < 5) {
                     $('#seconds_bar div').animate({
                         width: "0%"
-                    }, 1000, "linear", function () {
+                    }, 500, "linear", function () {
                         $('#seconds_bar div').animate({
                             width: (((5 - interval - 1) / 60) * 100) + "%"
                         }, 1000 * (5 - interval - 1), "linear");

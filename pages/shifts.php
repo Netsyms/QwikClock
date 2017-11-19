@@ -15,8 +15,6 @@ $totalseconds = sumelapsedtimearray($punchtimes);
 $totalpunches = count($punches);
 ?>
 
-<p class="page-header h5"><i class="fa fa-clock-o fa-fw"></i> <?php lang("shifts") ?></p>
-
 <div class="btn-group mgn-btm-10px">
     <?php
     if (account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE")) {

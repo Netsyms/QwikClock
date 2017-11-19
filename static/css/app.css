@@ -78,6 +78,10 @@
     margin-left: 10px;
 }
 
+#user-box {
+    display: inline-block;
+}
+
 /*
 ==============================
             THEMING

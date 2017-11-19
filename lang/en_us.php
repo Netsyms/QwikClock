@@ -77,4 +77,17 @@ define("STRINGS", [
     "add" => "Add",
     "choose a shift" => "Choose a shift",
     "shift assigned" => "Shift assigned.",
+    "report export" => "Reports/Export",
+    "report type" => "Report type",
+    "format" => "Format",
+    "generate report" => "Generate report",
+    "choose an option" => "Choose an option",
+    "csv file" => "CSV text file",
+    "ods file" => "ODS spreadsheet",
+    "html file" => "HTML web page",
+    "report filtered to" => "Report filtered to {name} ({username})",
+    "all users" => "All users",
+    "one user" => "One user",
+    "choose user" => "Type to choose user",
+    "filter" => "Filter"
 ]);

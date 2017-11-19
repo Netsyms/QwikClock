@@ -51,6 +51,18 @@ define("PAGES", [
             "static/js/addshift.js"
         ]
     ],
+    "export" => [
+        "title" => "report export",
+        "navbar" => true,
+        "icon" => "download",
+        "styles" => [
+            "static/css/easy-autocomplete.min.css"
+        ],
+        "scripts" => [
+            "static/js/jquery.easy-autocomplete.min.js",
+            "static/js/export.js"
+        ]
+    ],
     "assignshift" => [
         "title" => "assign shift",
         "navbar" => false,

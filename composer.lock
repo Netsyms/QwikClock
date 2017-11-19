@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1c8b61c5d506ae016285b99b20040cf0",
+    "hash": "809fda99e7cc89e7857f8a5a7bb0bc78",
+    "content-hash": "b8ba52c94c62ef0abbe09903ec2cdca8",
     "packages": [
         {
             "name": "catfan/medoo",
@@ -63,7 +64,7 @@
                 "sql",
                 "sqlite"
             ],
-            "time": "2017-05-22T04:39:48+00:00"
+            "time": "2017-05-22 04:39:48"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -125,7 +126,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2017-02-28T22:50:30+00:00"
+            "time": "2017-02-28 22:50:30"
         },
         {
             "name": "guzzlehttp/promises",
@@ -176,7 +177,7 @@
             "keywords": [
                 "promise"
             ],
-            "time": "2016-12-20T10:07:11+00:00"
+            "time": "2016-12-20 10:07:11"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -241,7 +242,114 @@
                 "uri",
                 "url"
             ],
-            "time": "2017-03-20T17:10:46+00:00"
+            "time": "2017-03-20 17:10:46"
+        },
+        {
+            "name": "lapinator/ods-php-generator",
+            "version": "v0.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Lapinator/odsPhpGenerator.git",
+                "reference": "575314c003c2ec3032813bedcc1d27032b7b7ab2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Lapinator/odsPhpGenerator/zipball/575314c003c2ec3032813bedcc1d27032b7b7ab2",
+                "reference": "575314c003c2ec3032813bedcc1d27032b7b7ab2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Laurent VUIBERT",
+                    "email": "lapinator@gmx.fr",
+                    "homepage": "http://lapinator.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Open Document Spreadsheet (.ods) generator ",
+            "homepage": "https://odsphpgenerator.lapinator.net/",
+            "keywords": [
+                "LibreOffice",
+                "ods"
+            ],
+            "time": "2016-04-14 21:51:27"
+        },
+        {
+            "name": "league/csv",
+            "version": "9.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/csv.git",
+                "reference": "bfa3aa8e755377cd6cc2242cfd074e48c7c300ba"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/csv/zipball/bfa3aa8e755377cd6cc2242cfd074e48c7c300ba",
+                "reference": "bfa3aa8e755377cd6cc2242cfd074e48c7c300ba",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=7.0.10"
+            },
+            "require-dev": {
+                "ext-curl": "*",
+                "friendsofphp/php-cs-fixer": "^2.0",
+                "phpunit/phpunit": "^6.0"
+            },
+            "suggest": {
+                "ext-iconv": "Needed to ease transcoding CSV using iconv stream filters"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "9.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Csv\\": "src"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ignace Nyamagana Butera",
+                    "email": "nyamsprod@gmail.com",
+                    "homepage": "https://github.com/nyamsprod/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Csv data manipulation made easy in PHP",
+            "homepage": "http://csv.thephpleague.com",
+            "keywords": [
+                "csv",
+                "export",
+                "filter",
+                "import",
+                "read",
+                "write"
+            ],
+            "time": "2017-10-20 08:03:26"
         },
         {
             "name": "psr/http-message",
@@ -291,7 +399,7 @@
                 "request",
                 "response"
             ],
-            "time": "2016-08-06T14:39:51+00:00"
+            "time": "2016-08-06 14:39:51"
         }
     ],
     "packages-dev": [],

@@ -26,9 +26,9 @@ $totalpunches = count($punches);
         <?php
     }
     ?>
-    <span class="btn btn-grey" id="show_btn" data-showall=""><i class="fa fa-filter"></i> <span><?php lang("show all shifts") ?></span></span>
+    <span class="btn btn-blue-grey" id="show_btn" data-showall=""><i class="fa fa-filter"></i> <span><?php lang("show all shifts") ?></span></span>
 </div>
-<div class="text-grey" id="showing-all"><i class="fa fa-info-circle"></i> <?php lang("showing all shifts"); ?></div>
+<div class="text-blue-grey" id="showing-all"><i class="fa fa-info-circle"></i> <?php lang("showing all shifts"); ?></div>
 
 <table id="shifttable" class="table table-bordered table-striped">
     <thead>

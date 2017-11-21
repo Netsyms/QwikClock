@@ -75,7 +75,7 @@ switch ($VARS['action']) {
         header('Content-Type: application/json');
         exit(json_encode($out));
     case "editshift":
-        if (account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE")) {
+        if (account_has_permission($_SESSION['username'], "QWIKCLOCK_ADMIN")) {
             $valid_daycodes = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
             $name = htmlentities($VARS['shiftname']);
@@ -130,23 +130,34 @@ switch ($VARS['action']) {
         $already_assigned = $database->select('assigned_shifts', 'uid', ['shiftid' => $VARS['shift']]);
         require_once __DIR__ . "/lib/userinfo.php";
         $managedusers = getManagedUsernames($_SESSION['uid']);
+        $manageduids = getManagedUIDs($_SESSION['uid']);
         foreach ($VARS['users'] as $u) {
-            if (!account_has_permission($_SESSION['username'], "ADMIN")) {
-                if (!in_array($u, $managedusers)) {
-                    returnToSender("you_arent_my_supervisor", htmlentities($u));
-                }
-            }
             if (!user_exists($u)) {
                 returnToSender("user_not_exists", htmlentities($u));
             }
             $uid = getUserByUsername($u)['uid'];
-            $database->insert('assigned_shifts', ['uid' => $uid, 'shiftid' => $VARS['shift']]);
+            if (!account_has_permission($_SESSION['username'], "QWIKCLOCK_ADMIN")) {
+                if (!in_array($u, $managedusers) && !in_array($uid, $already_assigned)) {
+                    returnToSender("you_arent_my_supervisor", htmlentities($u));
+                }
+            }
+            if (!in_array($uid, $already_assigned)) {
+                $database->insert('assigned_shifts', ['uid' => $uid, 'shiftid' => $VARS['shift']]);
+            }
             $already_assigned = array_diff($already_assigned, [$uid]); // Remove user from old list
         }
+        // $already_assigned now only has removed users
+        $removefailed = false;
         foreach ($already_assigned as $uid) {
+            if (!account_has_permission($_SESSION['username'], "QWIKCLOCK_ADMIN")) {
+                if (!in_array($uid, $manageduids)) {
+                    $removefailed = true;
+                    continue;
+                }
+            }
             $database->delete('assigned_shifts', ["AND" => ['uid' => $uid, 'shiftid' => $VARS['shift']]]);
         }
-        returnToSender("shift_assigned");
+        returnToSender($removefailed ? "shift_assigned_removefailed" : "shift_assigned");
         break;
     case "autocomplete_user":
         header("Content-Type: application/json");

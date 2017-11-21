@@ -77,6 +77,7 @@ define("STRINGS", [
     "add" => "Add",
     "choose a shift" => "Choose a shift",
     "shift assigned" => "Shift assigned.",
+    "shift assigned but removal failed" => "Shift assigned successfully, but one or more users are not managed by you and were not removed.",
     "report export" => "Reports/Export",
     "report type" => "Report type",
     "format" => "Format",

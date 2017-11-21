@@ -61,6 +61,10 @@ define("MESSAGES", [
         "string" => "shift assigned",
         "type" => "success"
     ],
+    "shift_assigned_removefailed" => [
+        "string" => "shift assigned but removal failed",
+        "type" => "info"
+    ],
     "not_assigned_to_work" => [
         "string" => "not assigned to work now",
         "type" => "danger"

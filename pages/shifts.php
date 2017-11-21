@@ -17,9 +17,13 @@ $totalpunches = count($punches);
 
 <div class="btn-group mgn-btm-10px">
     <?php
-    if (account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE")) {
+    if (account_has_permission($_SESSION['username'], "QWIKCLOCK_ADMIN")) {
         ?>
         <a href="app.php?page=editshift" class="btn btn-success"><i class="fa fa-calendar-plus-o"></i> <?php lang("new shift"); ?></a>
+    <?php
+    }
+    if (account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE") || account_has_permission($_SESSION['username'], "QWIKCLOCK_ADMIN")) {
+    ?>
         <a href="app.php?page=assignshift" class="btn btn-info"><i class="fa fa-calendar-check-o"></i> <?php lang("assign shift"); ?></a>
         <?php
     }

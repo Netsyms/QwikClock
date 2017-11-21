@@ -31,10 +31,32 @@ switch ($VARS['action']) {
         $out = ["status" => "OK", "maxresults" => $max, "pong" => true];
         exit(json_encode($out));
     case "punchin":
-        if ($database->has('punches', ['AND' => ['uid' => $userinfo['uid'], 'out' => null]])) {
+        if ($database->has('punches', ['AND' => ['uid' => $_SESSION['uid'], 'out' => null]])) {
             die(json_encode(["status" => "ERROR", "msg" => lang("already punched in", false)]));
         }
-        $database->insert('punches', ['uid' => $userinfo['uid'], 'in' => date("Y-m-d H:i:s"), 'out' => null, 'notes' => '']);
+
+        $shiftid = null;
+        if ($database->has('assigned_shifts', ['uid' => $_SESSION['uid']])) {
+            $minclockintime = strtotime("now + 5 minutes");
+            $shifts = $database->select('shifts', ["[>]assigned_shifts" => ['shiftid' => 'shiftid']], ["shifts.shiftid", "start", "end", "days"], ["AND" =>['uid' => $_SESSION['uid'], 'start[<=]' => date("H:i:s", $minclockintime)]]);
+            foreach ($shifts as $shift) {
+                $curday = substr(date("D"), 0, 2);
+                if (strpos($shift['days'], $curday) === FALSE) {
+                    continue;
+                }
+                if (strtotime($shift['end']) >= strtotime($shift['start'])) {
+                    if (strtotime("now") >= strtotime($shift['end'])) {
+                        continue; // shift is already over
+                    }
+                }
+                $shiftid = $shift['shiftid'];
+            }
+            if (is_null($shiftid)) {
+                die(json_encode(["status" => "ERROR", "msg" => lang("not assigned to work now", false)]));
+            }
+        }
+
+        $database->insert('punches', ['uid' => $_SESSION['uid'], 'in' => date("Y-m-d H:i:s"), 'out' => null, 'notes' => '', 'shiftid' => $shiftid]);
         exit(json_encode(["status" => "OK", "msg" => lang("punched in", false)]));
     case "punchout":
         if (!$database->has('punches', ['AND' => ['uid' => $userinfo['uid'], 'out' => null]])) {

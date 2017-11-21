@@ -82,6 +82,10 @@
     display: inline-block;
 }
 
+.red {
+    color: red;
+}
+
 /*
 ==============================
             THEMING

@@ -19,14 +19,35 @@ use odsPhpGenerator\odsTableCellString;
 use odsPhpGenerator\odsStyleTableColumn;
 use odsPhpGenerator\odsStyleTableCell;
 
+require_once __DIR__ . "/userinfo.php";
+require_once __DIR__ . "/login.php";
+
 // Allow access with a download code, for mobile app and stuff
 $date = date("Y-m-d H:i:s");
+$allowed_users = [];
+$requester = -1;
 if (isset($VARS['code']) && LOADED) {
     if (!$database->has('report_access_codes', ["AND" => ['code' => $VARS['code'], 'expires[>]' => $date]])) {
         dieifnotloggedin();
+        $requester = $_SESSION['uid'];
+    } else {
+        $requester = $database->get('report_access_codes', 'uid', ['code' => $VARS['code']]);
     }
 } else {
     dieifnotloggedin();
+    $requester = $_SESSION['uid'];
+}
+
+if (account_has_permission($_SESSION['username'], "ADMIN")) {
+    $allowed_users = true;
+} else {
+    if (account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE")) {
+        $allowed_users = getManagedUIDs($requester);
+    }
+
+    if (account_has_permission($_SESSION['username'], "QWIKCLOCK_EDITSELF")) {
+        $allowed_users[] = $_SESSION['uid'];
+    }
 }
 
 // Delete old DB entries
@@ -34,8 +55,6 @@ $database->delete('report_access_codes', ['expires[<=]' => $date]);
 
 if (LOADED) {
     $user = null;
-    require_once __DIR__ . "/userinfo.php";
-    require_once __DIR__ . "/login.php";
     if ($VARS['users'] != "all" && !is_empty($VARS['user']) && user_exists($VARS['user'])) {
         $user = getUserByUsername($VARS['user']);
     }
@@ -50,14 +69,19 @@ if (LOADED) {
 
 function getShiftReport($user = null) {
     global $database;
+    global $allowed_users;
     if ($user != null && array_key_exists('uid', $user)) {
+        $uid = -1;
+        if ($allowed_users === true || in_array($user['uid'], $allowed_users)) {
+            $uid = $user['uid'];
+        }
         $shifts = $database->select(
                 "shifts", [
             "[>]assigned_shifts" => ["shiftid" => "shiftid"]
                 ], [
             "shifts.shiftid", "shiftname", "start", "end", "days"
                 ], [
-            "uid" => $user['uid']
+            "uid" => $uid
                 ]
         );
     } else {
@@ -92,6 +116,7 @@ function getShiftReport($user = null) {
 
 function getPunchReport($user = null, $start = null, $end = null) {
     global $database;
+    global $allowed_users;
     $where = [];
     if ((bool) strtotime($start) == TRUE) {
         $where["OR #start"] = [
@@ -103,8 +128,14 @@ function getPunchReport($user = null, $start = null, $end = null) {
         // Make the date be the end of the day, not the start
         $where["in[<=]"] = date("Y-m-d", strtotime($end)) . " 23:59:59";
     }
-    if ($user != null && array_key_exists('uid', $user)) {
+    if ($user != null && array_key_exists('uid', $user) && ($allowed_users === true || in_array($user['uid'], $allowed_users))) {
         $where["uid"] = $user['uid'];
+    } else if ($user != null && array_key_exists('uid', $user) && $allowed_users !== true && !in_array($user['uid'], $allowed_users)) {
+        $where["uid"] = -1;
+    } else {
+        if ($allowed_users !== true) {
+            $where["uid"] = $allowed_users;
+        }
     }
     if (count($where) > 1) {
         $where = ["AND" => $where];

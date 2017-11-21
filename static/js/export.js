@@ -18,17 +18,33 @@ var options = {
         return data;
     },
     getValue: function (element) {
+        if (element.managed == 0) {
+            $('#user-selection').addClass('has-error');
+            $('#user-not-managed-text').css('visibility', '');
+        } else {
+            $('#user-selection').removeClass('has-error');
+            $('#user-not-managed-text').css('visibility', 'hidden');
+        }
         return element.username;
     },
     template: {
         type: "custom",
         method: function (value, item) {
-            return item.name + " <i class=\"small\">" + item.username + "</i>";
+            if (item.managed == 0) {
+                return "<span class=\"red\">" + item.name + " <i class=\"small\">" + item.username + "</i></span>";
+            } else {
+                return item.name + " <i class=\"small\">" + item.username + "</i>";
+            }
         }
     }
 };
 
 $("#user-box").easyAutocomplete(options);
+
+$('#user-box').on("keypress", function () {
+    $('#user-not-managed-text').css('visibility', 'hidden');
+    $('#user-selection').removeClass('has-error');
+});
 
 $(function () {
     $('#startdate').datetimepicker({
@@ -40,3 +56,5 @@ $(function () {
         useCurrent: true
     });
 });
+
+$('#user-not-managed-text').css('visibility', 'hidden');

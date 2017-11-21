@@ -39,7 +39,7 @@ switch ($VARS['action']) {
         $shiftid = null;
         if ($database->has('assigned_shifts', ['uid' => $_SESSION['uid']])) {
             $minclockintime = strtotime("now + 5 minutes");
-            $shifts = $database->select('shifts', ["[>]assigned_shifts" => ['shiftid' => 'shiftid']], ["shifts.shiftid", "start", "end", "days"], ["AND" =>['uid' => $_SESSION['uid'], 'start[<=]' => date("H:i:s", $minclockintime)]]);
+            $shifts = $database->select('shifts', ["[>]assigned_shifts" => ['shiftid' => 'shiftid']], ["shifts.shiftid", "start", "end", "days"], ["AND" => ['uid' => $_SESSION['uid'], 'start[<=]' => date("H:i:s", $minclockintime)]]);
             foreach ($shifts as $shift) {
                 $curday = substr(date("D"), 0, 2);
                 if (strpos($shift['days'], $curday) === FALSE) {
@@ -167,7 +167,19 @@ switch ($VARS['action']) {
 
         $resp = json_decode($response->getBody(), TRUE);
         if ($resp['status'] == "OK") {
-            exit(json_encode($resp['result']));
+            if (!account_has_permission($_SESSION['username'], "ADMIN")) {
+                require_once __DIR__ . "/lib/userinfo.php";
+                $managed = getManagedUIDs($_SESSION['uid']);
+                $result = $resp['result'];
+                for ($i = 0; $i < count($result); $i++) {
+                    if (!in_array($result[$i]['uid'], $managed)) {
+                        $result[$i]['managed'] = 0;
+                    }
+                }
+                exit(json_encode($result));
+            } else {
+                exit(json_encode($resp['result']));
+            }
         } else {
             exit("[]");
         }

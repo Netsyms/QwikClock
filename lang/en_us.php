@@ -88,7 +88,7 @@ define("STRINGS", [
     "report filtered to user" => "Report filtered to {name} ({username})",
     "report filtered to start date" => "Only showing entries later than {date}",
     "report filtered to end date" => "Only showing entries earlier than {date}",
-    "all users" => "All users",
+    "all managed users" => "All managed users",
     "one user" => "One user",
     "choose user" => "Type to choose user",
     "filter" => "Filter",
@@ -97,5 +97,6 @@ define("STRINGS", [
     "shiftid" => "Shift ID",
     "shiftname" => "Shift Name",
     "punches" => "Punches",
-    "not assigned to work now" => "You are not assigned to work right now."
+    "not assigned to work now" => "You are not assigned to work right now.",
+    "not a managed user" => "Not a managed user",
 ]);

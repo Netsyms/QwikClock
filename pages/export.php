@@ -51,14 +51,17 @@ if (!account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE")) {
                         <div class="radio">
                             <label>
                                 <input name="users" value="all" checked="" type="radio"> <i class="fa fa-users fa-fw"></i>
-                                <?php lang("all users") ?>
+                                <?php lang("all managed users") ?>
                             </label>
                         </div>
                         <div class="radio">
                             <label>
                                 <input name="users" value="one" type="radio"> <i class="fa fa-user fa-fw"></i>
                                 <?php lang("one user") ?>
-                                <input type="text" name="user" class="form-control" id="user-box" placeholder="<?php lang("choose user") ?>" />
+                                <div class="form-group" id="user-selection">
+                                    <input type="text" name="user" class="form-control" id="user-box" placeholder="<?php lang("choose user") ?>" />
+                                    <label class="control-label" id="user-not-managed-text" for="user-box"><i class="fa fa-warning"></i> <?php lang("not a managed user") ?></label>
+                                </div>
                             </label>
                         </div>
                         <hr />
@@ -75,7 +78,7 @@ if (!account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE")) {
         <br />
         <?php
         $code = uniqid(rand(10000000, 99999999), true);
-        $database->insert('report_access_codes', ['code' => $code, 'expires' => date("Y-m-d H:i:s", strtotime("+5 minutes"))]);
+        $database->insert('report_access_codes', ['code' => $code, 'expires' => date("Y-m-d H:i:s", strtotime("+5 minutes")), 'uid' => $_SESSION['uid']]);
         ?>
         <input type="hidden" name="code" value="<?php echo $code; ?>" />
 

@@ -98,7 +98,7 @@ if ($showall) {
             ], $where);
 }
 
-$showeditbtn = account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE");
+$showeditbtn = account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE") || account_has_permission($_SESSION['username'], "QWIKCLOCK_ADMIN");
 
 for ($i = 0; $i < count($shifts); $i++) {
     $shifts[$i][0] = "";

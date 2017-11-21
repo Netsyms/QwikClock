@@ -85,9 +85,17 @@ define("STRINGS", [
     "csv file" => "CSV text file",
     "ods file" => "ODS spreadsheet",
     "html file" => "HTML web page",
-    "report filtered to" => "Report filtered to {name} ({username})",
+    "report filtered to user" => "Report filtered to {name} ({username})",
+    "report filtered to start date" => "Only showing entries later than {date}",
+    "report filtered to end date" => "Only showing entries earlier than {date}",
     "all users" => "All users",
     "one user" => "One user",
     "choose user" => "Type to choose user",
-    "filter" => "Filter"
+    "filter" => "Filter",
+    "date range" => "Date range",
+    "punchid" => "Punch ID",
+    "shiftid" => "Shift ID",
+    "shiftname" => "Shift Name",
+    "punches" => "Punches",
+    "not assigned to work now" => "You are not assigned to work right now."
 ]);

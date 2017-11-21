@@ -60,5 +60,9 @@ define("MESSAGES", [
     "shift_assigned" => [
         "string" => "shift assigned",
         "type" => "success"
+    ],
+    "not_assigned_to_work" => [
+        "string" => "not assigned to work now",
+        "type" => "danger"
     ]
 ]);

@@ -40,7 +40,7 @@ if (LOADED) {
         $user = getUserByUsername($VARS['user']);
     }
     if (isset($VARS['type']) && isset($VARS['format'])) {
-        generateReport($VARS['type'], $VARS['format'], $user);
+        generateReport($VARS['type'], $VARS['format'], $user, $VARS['startdate'], $VARS['enddate']);
         die();
     } else {
         lang("invalid parameters");
@@ -90,33 +90,93 @@ function getShiftReport($user = null) {
     return $out;
 }
 
-function getReportData($type, $user = null) {
+function getPunchReport($user = null, $start = null, $end = null) {
+    global $database;
+    $where = [];
+    if ((bool) strtotime($start) == TRUE) {
+        $where["OR #start"] = [
+            "in[>=]" => date("Y-m-d", strtotime($start)),
+            "out[>=]" => date("Y-m-d", strtotime($start))
+        ];
+    }
+    if ((bool) strtotime($end) == TRUE) {
+        // Make the date be the end of the day, not the start
+        $where["in[<=]"] = date("Y-m-d", strtotime($end)) . " 23:59:59";
+    }
+    if ($user != null && array_key_exists('uid', $user)) {
+        $where["uid"] = $user['uid'];
+    }
+    if (count($where) > 1) {
+        $where = ["AND" => $where];
+    }
+    $punches = $database->select(
+            "punches", [
+        "[>]shifts" => ["shiftid" => "shiftid"]
+            ], [
+        "punchid", "uid", "in", "out", "notes", "punches.shiftid", "shiftname"
+            ], $where
+    );
+    $header = [lang("punchid", false), lang("name", false), lang("in", false), lang("out", false), lang("shiftid", false), lang("shiftname", false), lang("notes", false)];
+    $out = [$header];
+    $usercache = [];
+    for ($i = 0; $i < count($punches); $i++) {
+        if (!array_key_exists($punches[$i]["uid"], $usercache)) {
+            $usercache[$punches[$i]["uid"]] = getUserByID($punches[$i]["uid"]);
+        }
+        $out[] = [
+            $punches[$i]["punchid"],
+            $usercache[$punches[$i]["uid"]]["name"] . " (" . $usercache[$punches[$i]["uid"]]["username"] . ")",
+            date(DATETIME_FORMAT, strtotime($punches[$i]['in'])),
+            (is_null($punches[$i]['out']) ? "" : date(DATETIME_FORMAT, strtotime($punches[$i]['out']))),
+            $punches[$i]['shiftid'],
+            $punches[$i]['shiftname'],
+            $punches[$i]['notes']
+        ];
+    }
+    return $out;
+}
+
+function getReportData($type, $user = null, $start = null, $end = null) {
     switch ($type) {
         case "shifts":
             return getShiftReport($user);
+            break;
+        case "punches":
+            return getPunchReport($user, $start, $end);
             break;
         default:
             return [["error"]];
     }
 }
 
-function dataToCSV($data, $name = "report", $user = null) {
+function dataToCSV($data, $name = "report", $user = null, $start = null, $end = null) {
     $csv = Writer::createFromString('');
     $usernotice = "";
     $usertitle = "";
+    $datetitle = "";
     if ($user != null && array_key_exists('username', $user) && array_key_exists('name', $user)) {
-        $usernotice = lang2("report filtered to", ["name" => $user['name'], "username" => $user['username']], false);
+        $usernotice = lang2("report filtered to user", ["name" => $user['name'], "username" => $user['username']], false);
         $usertitle = "_" . $user['username'];
         $csv->insertOne([$usernotice]);
     }
+    if ($start != null && (bool) strtotime($start)) {
+        $datenotice = lang2("report filtered to start date", ["date" => date(DATE_FORMAT, strtotime($start))], false);
+        $datetitle = "_" . date(DATE_FORMAT, strtotime($start));
+        $csv->insertOne([$datenotice]);
+    }
+    if ($end != null && (bool) strtotime($end)) {
+        $datenotice = lang2("report filtered to end date", ["date" => date(DATE_FORMAT, strtotime($end))], false);
+        $datetitle .= ($datetitle == "" ? "_" : "-") . date(DATE_FORMAT, strtotime($end));
+        $csv->insertOne([$datenotice]);
+    }
     $csv->insertAll($data);
     header('Content-type: text/csv');
-    header('Content-Disposition: attachment; filename="' . $name . $usertitle . "_" . date("Y-m-d_Hi") . ".csv" . '"');
+    header('Content-Disposition: attachment; filename="' . $name . $usertitle . $datetitle . "_" . date("Y-m-d_Hi") . ".csv" . '"');
     echo $csv;
     die();
 }
 
-function dataToODS($data, $name = "report", $user = null) {
+function dataToODS($data, $name = "report", $user = null, $start = null, $end = null) {
     $ods = new ods();
     $styleColumn = new odsStyleTableColumn();
     $styleColumn->setUseOptimalColumnWidth(true);
@@ -130,11 +190,26 @@ function dataToODS($data, $name = "report", $user = null) {
 
     $usernotice = "";
     $usertitle = "";
+    $datetitle = "";
     if ($user != null && array_key_exists('username', $user) && array_key_exists('name', $user)) {
-        $usernotice = lang2("report filtered to", ["name" => $user['name'], "username" => $user['username']], false);
+        $usernotice = lang2("report filtered to user", ["name" => $user['name'], "username" => $user['username']], false);
         $usertitle = "_" . $user['username'];
         $row = new odsTableRow();
         $row->addCell(new odsTableCellString($usernotice));
+        $table->addRow($row);
+    }
+    if ($start != null && (bool) strtotime($start)) {
+        $datenotice = lang2("report filtered to start date", ["date" => date(DATE_FORMAT, strtotime($start))], false);
+        $datetitle = "_" . date(DATE_FORMAT, strtotime($start));
+        $row = new odsTableRow();
+        $row->addCell(new odsTableCellString($datenotice));
+        $table->addRow($row);
+    }
+    if ($end != null && (bool) strtotime($end)) {
+        $datenotice = lang2("report filtered to end date", ["date" => date(DATE_FORMAT, strtotime($end))], false);
+        $datetitle .= ($datetitle == "" ? "_" : "-") . date(DATE_FORMAT, strtotime($end));
+        $row = new odsTableRow();
+        $row->addCell(new odsTableCellString($datenotice));
         $table->addRow($row);
     }
 
@@ -152,10 +227,10 @@ function dataToODS($data, $name = "report", $user = null) {
         $rowid++;
     }
     $ods->addTable($table);
-    $ods->downloadOdsFile($name . $usertitle . "_" . date("Y-m-d_Hi") . ".ods");
+    $ods->downloadOdsFile($name . $usertitle . $datetitle . "_" . date("Y-m-d_Hi") . ".ods");
 }
 
-function dataToHTML($data, $name = "report", $user = null) {
+function dataToHTML($data, $name = "report", $user = null, $start = null, $end = null) {
     global $SECURE_NONCE;
     // HTML exporter doesn't like null values
     for ($i = 0; $i < count($data); $i++) {
@@ -167,16 +242,26 @@ function dataToHTML($data, $name = "report", $user = null) {
     }
     $usernotice = "";
     $usertitle = "";
+    $datenotice = "";
+    $datetitle = "";
     if ($user != null && array_key_exists('username', $user) && array_key_exists('name', $user)) {
-        $usernotice = "<span>" . lang2("report filtered to", ["name" => $user['name'], "username" => $user['username']], false) . "</span><br />";
+        $usernotice = "<span>" . lang2("report filtered to user", ["name" => $user['name'], "username" => $user['username']], false) . "</span><br />";
         $usertitle = "_" . $user['username'];
+    }
+    if ($start != null && (bool) strtotime($start)) {
+        $datenotice = "<span>" . lang2("report filtered to start date", ["date" => date(DATE_FORMAT, strtotime($start))], false) . "</span><br />";
+        $datetitle = "_" . date(DATE_FORMAT, strtotime($start));
+    }
+    if ($end != null && (bool) strtotime($end)) {
+        $datenotice .= "<span>" . lang2("report filtered to end date", ["date" => date(DATE_FORMAT, strtotime($end))], false) . "</span><br />";
+        $datetitle .= ($datetitle == "" ? "_" : "-") . date(DATE_FORMAT, strtotime($end));
     }
     header('Content-type: text/html');
     $converter = new HTMLConverter();
     $out = "<!DOCTYPE html>\n"
             . "<meta charset=\"utf-8\">\n"
             . "<meta name=\"viewport\" content=\"width=device-width\">\n"
-            . "<title>" . $name . $usertitle . "_" . date("Y-m-d_Hi") . "</title>\n"
+            . "<title>" . $name . $usertitle . $datetitle . "_" . date("Y-m-d_Hi") . "</title>\n"
             . <<<STYLE
 <style nonce="$SECURE_NONCE">
     .table-csv-data {
@@ -190,23 +275,23 @@ function dataToHTML($data, $name = "report", $user = null) {
     }
 </style>
 STYLE
-            . $usernotice
+            . $usernotice . $datenotice
             . $converter->convert($data);
     echo $out;
 }
 
-function generateReport($type, $format, $user = null) {
-    $data = getReportData($type, $user);
+function generateReport($type, $format, $user = null, $start = null, $end = null) {
+    $data = getReportData($type, $user, $start, $end);
     switch ($format) {
         case "ods":
-            dataToODS($data, $type, $user);
+            dataToODS($data, $type, $user, $start, $end);
             break;
         case "html":
-            dataToHTML($data, $type, $user);
+            dataToHTML($data, $type, $user, $start, $end);
             break;
         case "csv":
         default:
-            echo dataToCSV($data, $type, $user);
+            echo dataToCSV($data, $type, $user, $start, $end);
             break;
     }
 }

@@ -29,3 +29,14 @@ var options = {
 };
 
 $("#user-box").easyAutocomplete(options);
+
+$(function () {
+    $('#startdate').datetimepicker({
+        format: "MMM D YYYY",
+        useCurrent: false
+    });
+    $('#enddate').datetimepicker({
+        format: "MMM D YYYY"/*"YYYY-M-DTH:m"*/,
+        useCurrent: true
+    });
+});

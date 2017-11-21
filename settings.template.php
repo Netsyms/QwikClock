@@ -43,6 +43,9 @@ define("TIME_FORMAT", "g:i A"); // 12 hour time
 define("DATETIME_FORMAT", "M j Y g:i:s A"); // 12 hour time
 #define("DATETIME_FORMAT", "M j Y G:i:s"); // 24 hour time
 
+// Used for reports
+define("DATE_FORMAT", "M j, Y");
+
 // Used on the clock widget
 define("LONG_DATE_FORMAT", "l F j");
 

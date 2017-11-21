@@ -56,9 +56,12 @@ define("PAGES", [
         "navbar" => true,
         "icon" => "download",
         "styles" => [
+            "static/css/bootstrap-datetimepicker.min.css",
             "static/css/easy-autocomplete.min.css"
         ],
         "scripts" => [
+            "static/js/moment.min.js",
+            "static/js/bootstrap-datetimepicker.min.js",
             "static/js/jquery.easy-autocomplete.min.js",
             "static/js/export.js"
         ]

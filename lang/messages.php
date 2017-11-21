@@ -45,6 +45,14 @@ define("MESSAGES", [
         "string" => "shift saved",
         "type" => "success"
     ],
+    "shift_deleted" => [
+        "string" => "shift deleted",
+        "type" => "success"
+    ],
+    "shift_has_users" => [
+        "string" => "shift has users",
+        "type" => "danger"
+    ],
     "shift_name_used" => [
         "string" => "shift name used",
         "type" => "danger"

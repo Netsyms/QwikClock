@@ -111,6 +111,13 @@ if (isset($VARS['id']) && $database->has('shifts', ['shiftid' => $VARS['id']])) 
 
         <div class="panel-footer">
             <button type="submit" class="btn btn-success"><i class="fa fa-floppy-o"></i> <?php lang("save"); ?></button>
+            <?php
+            if ($editing && account_has_permission($_SESSION['username'], "QWIKCLOCK_ADMIN")) {
+                ?>
+                <a href="action.php?action=deleteshift&source=shifts&shiftid=<?php echo $data['shiftid']; ?>" class="btn btn-danger btn-xs pull-right mgn-top-8px"><i class="fa fa-times"></i> <?php lang('delete'); ?></a>
+                <?php
+            }
+            ?>
         </div>
     </div>
 </form>

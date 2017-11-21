@@ -120,6 +120,19 @@ switch ($VARS['action']) {
         } else {
             returnToSender("no_permission");
         }
+    case "deleteshift":
+        if (!$database->has('shifts', ['shiftid' => $VARS['shiftid']])) {
+            returnToSender("invalid_shiftid");
+        }
+        if (account_has_permission($_SESSION['username'], "QWIKCLOCK_ADMIN")) {
+            if ($database->has('assigned_shifts', ['shiftid' => $VARS['shiftid']])) {
+                returnToSender('shift_has_users');
+            }
+            $database->delete('shifts', ['shiftid' => $VARS['shiftid']]);
+            returnToSender("shift_deleted");
+        } else {
+            returnToSender("no_permission");
+        }
     case "assignshift":
         if (!account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE")) {
             returnToSender("no_permission");
@@ -178,7 +191,7 @@ switch ($VARS['action']) {
 
         $resp = json_decode($response->getBody(), TRUE);
         if ($resp['status'] == "OK") {
-            if (!account_has_permission($_SESSION['username'], "ADMIN")) {
+            if (!account_has_permission($_SESSION['username'], "QWIKCLOCK_ADMIN")) {
                 require_once __DIR__ . "/lib/userinfo.php";
                 $managed = getManagedUIDs($_SESSION['uid']);
                 $result = $resp['result'];

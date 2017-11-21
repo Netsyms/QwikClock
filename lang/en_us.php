@@ -66,6 +66,8 @@ define("STRINGS", [
     "edit shift" => "Edit Shift",
     "shift added" => "Shift added.",
     "shift saved" => "Shift saved.",
+    "shift deleted" => "Shift deleted.",
+    "shift has users" => "Please un-assign all users before deleting the shift.",
     "invalid time format" => "Invalid time format.  Please use HH:MM or HH:MM AM.",
     "shift name used" => "The shift name you gave is already in use.  Use a different name or edit the existing shift.",
     "invalid shiftid" => "Invalid shift ID.",

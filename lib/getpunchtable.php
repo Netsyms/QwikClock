@@ -9,12 +9,18 @@ header("Content-Type: application/json");
 require_once __DIR__ . "/login.php";
 require_once __DIR__ . "/userinfo.php";
 
-$showmanaged = ($VARS['show_all'] == 1 && account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE"));
+$account_is_admin = account_has_permission($_SESSION['username'], "QWIKCLOCK_ADMIN");
+$showmanaged = ($VARS['show_all'] == 1 && (account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE") || $account_is_admin));
 $managed_uids = [];
-if ($showmanaged) {
-    $managed_uids = getManagedUIDs($_SESSION['uid']);
-}
 $managed_uids[] = $_SESSION['uid'];
+if ($showmanaged) {
+    if ($account_is_admin) {
+        $managed_uids = false;
+    } else {
+        $managed_uids = getManagedUIDs($_SESSION['uid']);
+        $managed_uids[] = $_SESSION['uid'];
+    }
+}
 
 $out = [];
 
@@ -30,13 +36,13 @@ if ($VARS['order'][0]['dir'] == 'asc') {
     $sortby = "ASC";
 }
 switch ($VARS['order'][0]['column']) {
-    case 1:
+    case 2:
         $order = ["uid" => $sortby];
         break;
-    case 2:
+    case 3:
         $order = ["in" => $sortby];
         break;
-    case 3:
+    case 4:
         $order = ["out" => $sortby];
         break;
 }
@@ -53,10 +59,16 @@ if (!is_empty($VARS['search']['value'])) {
             "uid" => $managed_uids
         ]
     ];
+    if ($managed_uids !== false) {
+        $where["AND"]["uid"] = $managed_uids;
+    }
     $where = $wherenolimit;
     $where["LIMIT"] = [$VARS['start'], $VARS['length']];
 } else {
-    $where = ["uid" => $managed_uids, "LIMIT" => [$VARS['start'], $VARS['length']]];
+    $where = ["LIMIT" => [$VARS['start'], $VARS['length']]];
+    if ($managed_uids !== false) {
+        $where["uid"] = $managed_uids;
+    }
 }
 
 if (!is_null($order)) {
@@ -65,6 +77,7 @@ if (!is_null($order)) {
 
 
 $punches = $database->select('punches', [
+    'punchid',
     'uid',
     'in',
     'out',
@@ -73,21 +86,34 @@ $punches = $database->select('punches', [
 
 $usercache = [];
 
+$editself = account_has_permission($_SESSION['username'], "QWIKCLOCK_EDITSELF");
+
 for ($i = 0; $i < count($punches); $i++) {
     // Get user info
     if (!isset($usercache[$punches[$i]['uid']])) {
         $usercache[$punches[$i]['uid']] = getUserByID($punches[$i]['uid']);
     }
-    
+
     $punches[$i][0] = "";
-    $punches[$i][1] = $usercache[$punches[$i]['uid']]['name'];
-    $punches[$i][2] = date(DATETIME_FORMAT, strtotime($punches[$i]['in']));
-    if (is_null($punches[$i]['out'])) {
-        $punches[$i][3] = lang("na", false);
+    if ($_SESSION['uid'] == $punches[$i]['uid']) {
+        if ($editself) {
+            $punches[$i][1] = '<a class="btn btn-blue btn-xs" href="app.php?page=editpunch&pid=' . $punches[$i]['punchid'] . '"><i class="fa fa-pencil-square-o"></i> ' . lang("edit", false) . '</a>';
+        } else {
+            $punches[$i][1] = "";
+        }
+    } else if ($showmanaged) {
+        $punches[$i][1] = '<a class="btn btn-blue btn-xs" href="app.php?page=editpunch&pid=' . $punches[$i]['punchid'] . '"><i class="fa fa-pencil-square-o"></i> ' . lang("edit", false) . '</a>';
     } else {
-        $punches[$i][3] = date(DATETIME_FORMAT, strtotime($punches[$i]['out']));
+        $punches[$i][1] = "";
     }
-    $punches[$i][4] = $punches[$i]['notes'];
+    $punches[$i][2] = $usercache[$punches[$i]['uid']]['name'];
+    $punches[$i][3] = date(DATETIME_FORMAT, strtotime($punches[$i]['in']));
+    if (is_null($punches[$i]['out'])) {
+        $punches[$i][4] = lang("na", false);
+    } else {
+        $punches[$i][4] = date(DATETIME_FORMAT, strtotime($punches[$i]['out']));
+    }
+    $punches[$i][5] = $punches[$i]['notes'];
 }
 
 $out['status'] = "OK";

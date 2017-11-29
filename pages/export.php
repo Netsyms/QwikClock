@@ -3,7 +3,7 @@ require_once __DIR__ . '/../required.php';
 
 redirectifnotloggedin();
 
-if (!account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE")) {
+if (!account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE") && !account_has_permission($_SESSION['username'], "QWIKCLOCK_ADMIN")) {
     ?>
     <div class="alert alert-danger"><?php lang("missing permission") ?></div>
     <?php

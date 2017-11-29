@@ -74,6 +74,71 @@ switch ($VARS['action']) {
         $out = ["status" => "OK", "in" => $in];
         header('Content-Type: application/json');
         exit(json_encode($out));
+    case "editpunch":
+        require_once __DIR__ . "/lib/userinfo.php";
+        if (user_exists($VARS['user'])) {
+            $uid = getUserByUsername($VARS['user'])['uid'];
+        } else {
+            returnToSender("invalid_user");
+        }
+
+        $in = strtotime($VARS['in']);
+        $out = strtotime($VARS['out']);
+        if ($in === false) {
+            returnToSender("invalid_datetime");
+        }
+        if ($out === false) {
+            returnToSender("invalid_datetime");
+        }
+        if ($out < $in) {
+            returnToSender("in_before_out");
+        }
+
+        if (
+                account_has_permission($_SESSION['username'], "QWIKCLOCK_ADMIN") || (
+                account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE") && isManagerOf($_SESSION['uid'], $uid)
+                ) || (
+                account_has_permission($_SESSION['username'], "QWIKCLOCK_EDITSELF") && $_SESSION['uid'] == $uid
+                )
+        ) {
+            $data = [
+                "uid" => $uid,
+                "in" => date('Y-m-d H:i:s', $in),
+                "out" => date('Y-m-d H:i:s', $out),
+                "notes" => $VARS['notes']
+            ];
+            if ($database->has("punches", ["punchid" => $VARS['punchid']])) {
+                $database->update("punches", $data, ["punchid" => $VARS['punchid']]);
+            } else {
+                $database->insert("punches", $data);
+            }
+            returnToSender("punch_saved");
+        } else {
+            returnToSender("no_permission");
+        }
+    case "deletepunch":
+        require_once __DIR__ . "/lib/userinfo.php";
+
+        if (!$database->has("punches", ["punchid" => $VARS['punchid']])) {
+            returnToSender("invalid_parameters");
+        }
+
+        $pid = $VARS['punchid'];
+        $uid = $database->get("punches", "uid", ["punchid" => $pid]);
+
+        if (
+                account_has_permission($_SESSION['username'], "QWIKCLOCK_ADMIN") || (
+                account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE") && isManagerOf($_SESSION['uid'], $uid)
+                ) || (
+                account_has_permission($_SESSION['username'], "QWIKCLOCK_EDITSELF") && $_SESSION['uid'] == $uid
+                )
+        ) {
+
+            $database->delete("punches", ["punchid" => $VARS['punchid']]);
+            returnToSender("punch_deleted");
+        } else {
+            returnToSender("no_permission");
+        }
     case "editshift":
         if (account_has_permission($_SESSION['username'], "QWIKCLOCK_ADMIN")) {
             $valid_daycodes = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
@@ -134,7 +199,7 @@ switch ($VARS['action']) {
             returnToSender("no_permission");
         }
     case "assignshift":
-        if (!account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE")) {
+        if (!account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE") && !account_has_permission($_SESSION['username'], "QWIKCLOCK_ADMIN")) {
             returnToSender("no_permission");
         }
         if (!$database->has('shifts', ['shiftid' => $VARS['shift']])) {

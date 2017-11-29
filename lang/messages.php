@@ -76,5 +76,29 @@ define("MESSAGES", [
     "not_assigned_to_work" => [
         "string" => "not assigned to work now",
         "type" => "danger"
-    ]
+    ],
+    "invalid_user" => [
+        "string" => "invalid user",
+        "type" => "danger"
+    ],
+    "no_editself_permission" => [
+        "string" => "no editself permission",
+        "type" => "danger"
+    ],
+    "in_before_out" => [
+        "string" => "in must be before out",
+        "type" => "danger"
+    ],
+    "punch_saved" => [
+        "string" => "punch saved",
+        "type" => "success"
+    ],
+    "invalid_datetime" => [
+        "string" => "invalid datetime",
+        "type" => "danger"
+    ],
+    "punch_deleted" => [
+        "string" => "punch deleted",
+        "type" => "success"
+    ],
 ]);

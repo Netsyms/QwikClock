@@ -51,6 +51,20 @@ define("PAGES", [
             "static/js/addshift.js"
         ]
     ],
+    "editpunch" => [
+        "title" => "edit punch",
+        "navbar" => false,
+        "styles" => [
+            "static/css/bootstrap-datetimepicker.min.css",
+            "static/css/easy-autocomplete.min.css"
+        ],
+        "scripts" => [
+            "static/js/moment.min.js",
+            "static/js/bootstrap-datetimepicker.min.js",
+            "static/js/jquery.easy-autocomplete.min.js",
+            "static/js/editpunch.js"
+        ]
+    ],
     "export" => [
         "title" => "report export",
         "navbar" => true,

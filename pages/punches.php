@@ -6,7 +6,8 @@ redirectifnotloggedin();
 
 require_once __DIR__ . "/../lib/dates.php";
 $weekstart = sqldatetime(getstartofweek(WEEK_START));
-$punches = $database->select('punches', ['in', 'out'], ['AND' => ['uid' => $_SESSION['uid'], 'in[>]' => $weekstart]]);
+$weekend = sqldatetime(getstartofweek(WEEK_START) + 604800);
+$punches = $database->select('punches', ['in', 'out'], ['AND' => ['uid' => $_SESSION['uid'], 'in[>]' => $weekstart, 'in[<]' => $weekend]]);
 $punchtimes = [];
 foreach ($punches as $p) {
     $punchtimes[] = [$p['in'], $p['out']];
@@ -34,7 +35,11 @@ $totalpunches = count($punches);
             <div class="panel-body">
                 <h4>
                     <?php
-                    lang2("x punches", ["count" => $totalpunches]);
+                    if ($totalpunches != 1) {
+                        lang2("x punches", ["count" => $totalpunches]);
+                    } else {
+                        lang("1 punch");
+                    }
                     ?>
                 </h4>
             </div>
@@ -49,6 +54,7 @@ $totalpunches = count($punches);
     <thead>
         <tr>
             <th data-priority="0"></th>
+            <th data-priority="1"><?php lang('actions'); ?></th>
             <th data-priority="2"><i class="fa fa-fw fa-user hidden-xs"></i> <?php lang('name'); ?></th>
             <th data-priority="1"><i class="fa fa-fw fa-play hidden-xs"></i> <?php lang('in'); ?></th>
             <th data-priority="1"><i class="fa fa-fw fa-stop hidden-xs"></i> <?php lang('out'); ?></th>
@@ -61,6 +67,7 @@ $totalpunches = count($punches);
     <tfoot>
         <tr>
             <th data-priority="0"></th>
+            <th data-priority="1"><?php lang('actions'); ?></th>
             <th data-priority="2"><i class="fa fa-fw fa-user hidden-xs"></i> <?php lang('name'); ?></th>
             <th data-priority="1"><i class="fa fa-fw fa-play hidden-xs"></i> <?php lang('in'); ?></th>
             <th data-priority="1"><i class="fa fa-fw fa-stop hidden-xs"></i> <?php lang('out'); ?></th>

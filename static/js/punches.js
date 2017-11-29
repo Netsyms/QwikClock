@@ -20,12 +20,16 @@ var punchtable = $('#punchtable').DataTable({
             orderable: false
         },
         {
-            targets: 4,
+            targets: 1,
             orderable: false
-        }
+        },
+        {
+            targets: 5,
+            orderable: false
+        },
     ],
     order: [
-        [2, 'desc']
+        [3, 'desc']
     ],
     serverSide: true,
     ajax: {

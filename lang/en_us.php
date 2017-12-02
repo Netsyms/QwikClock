@@ -114,4 +114,7 @@ define("STRINGS", [
     "punch saved" => "Punch saved.",
     "invalid datetime" => "Could not understand the dates/times given.  Please use a standard format, such as \"January 1, 2018 3:30pm\".",
     "punch deleted" => "Punch deleted.",
+    "hours" => "Hours",
+    "hours:minutes" => "H:MM",
+    "totals" => "Totals"
 ]);

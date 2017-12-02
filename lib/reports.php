@@ -167,6 +167,75 @@ function getPunchReport($user = null, $start = null, $end = null) {
     return $out;
 }
 
+function getTotalsReport($user = null, $start = null, $end = null) {
+    global $database;
+    global $allowed_users;
+    $where = [];
+    if ((bool) strtotime($start) == TRUE) {
+        $where["OR #start"] = [
+            "in[>=]" => date("Y-m-d", strtotime($start)),
+            "out[>=]" => date("Y-m-d", strtotime($start))
+        ];
+    }
+    if ((bool) strtotime($end) == TRUE) {
+        // Make the date be the end of the day, not the start
+        $where["in[<=]"] = date("Y-m-d", strtotime($end)) . " 23:59:59";
+    }
+    if ($user != null && array_key_exists('uid', $user) && ($allowed_users === true || in_array($user['uid'], $allowed_users))) {
+        $where["uid"] = $user['uid'];
+    } else if ($user != null && array_key_exists('uid', $user) && $allowed_users !== true && !in_array($user['uid'], $allowed_users)) {
+        $where["uid"] = -1;
+    } else {
+        if ($allowed_users !== true) {
+            $where["uid"] = $allowed_users;
+        }
+    }
+    if (count($where) > 1) {
+        $where = ["AND" => $where];
+    }
+    $punches = $database->select(
+            "punches", [
+        "punchid", "uid", "in", "out"
+            ], $where
+    );
+    $header = [lang("name", false), lang("punches", false), lang("hours:minutes", false), lang("hours", false)];
+    $out = [$header];
+    $usercache = [];
+    $totalseconds = [];
+    $totalpunches = [];
+    for ($i = 0; $i < count($punches); $i++) {
+        if (!array_key_exists($punches[$i]["uid"], $usercache)) {
+            $usercache[$punches[$i]["uid"]] = getUserByID($punches[$i]["uid"]);
+        }
+        if (!array_key_exists($punches[$i]["uid"], $totalseconds)) {
+            $totalseconds[$punches[$i]["uid"]] = 0.0;
+            $totalpunches[$punches[$i]["uid"]] = 0;
+        }
+        $insec = strtotime($punches[$i]["in"]);
+        if (is_null($punches[$i]["out"])) {
+            $outsec = time();
+        } else {
+            $outsec = strtotime($punches[$i]["out"]);
+        }
+        $totalseconds[$punches[$i]["uid"]] += $outsec - $insec;
+        $totalpunches[$punches[$i]["uid"]] += 1;
+    }
+
+    foreach ($totalseconds as $uid => $sec) {
+        if (!array_key_exists($uid, $usercache)) {
+            $usercache[$uid] = getUserByID($uid);
+        }
+        $hhmm = floor($sec / 3600) . ":" . str_pad(floor(($sec / 60) % 60), 2, "0", STR_PAD_LEFT);
+        $out[] = [
+            $usercache[$uid]["name"] . " (" . $usercache[$uid]["username"] . ")",
+            $totalpunches[$uid] . "",
+            $hhmm,
+            round($sec / 60.0 / 60.0, 4) . ""
+        ];
+    }
+    return $out;
+}
+
 function getReportData($type, $user = null, $start = null, $end = null) {
     switch ($type) {
         case "shifts":
@@ -174,6 +243,9 @@ function getReportData($type, $user = null, $start = null, $end = null) {
             break;
         case "punches":
             return getPunchReport($user, $start, $end);
+            break;
+        case "totals":
+            return getTotalsReport($user, $start, $end);
             break;
         default:
             return [["error"]];

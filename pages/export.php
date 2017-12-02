@@ -22,6 +22,7 @@ if (!account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE") && !accou
                                 <select name="type" class="form-control" required>
                                     <option value="shifts"><?php lang("shifts") ?></option>
                                     <option value="punches"><?php lang("punches") ?></option>
+                                    <option value="totals"><?php lang("totals") ?></option>
                                 </select>
                             </div>
                         </div>

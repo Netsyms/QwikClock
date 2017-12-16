@@ -49,7 +49,7 @@ $("#addpersonbtn").click(function () {
 });
 
 function addPerson(p) {
-    p = String.trim(p);
+    p = p.trim();
     if (p == "") {
         return false;
     }

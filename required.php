@@ -1,5 +1,9 @@
 <?php
 
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
 /**
  * This file contains global settings and utility functions.
  */
@@ -76,7 +80,7 @@ function sendError($error) {
             . "<h1>A fatal application error has occurred.</h1>"
             . "<i>(This isn't your fault.)</i>"
             . "<h2>Details:</h2>"
-            . "<p>". htmlspecialchars($error) . "</p>");
+            . "<p>" . htmlspecialchars($error) . "</p>");
 }
 
 date_default_timezone_set(TIMEZONE);

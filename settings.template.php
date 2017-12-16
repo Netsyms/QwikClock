@@ -61,10 +61,7 @@ define('RECAPTCHA_SECRET_KEY', '');
 // See lang folder for language options
 define('LANGUAGE', "en_us");
 
-//////////////////////////////////////////////////////////////
-//  /!\       Warning: Changing these values may       /!\  //
-//  /!\  violate the terms of your license agreement!  /!\  //
-//////////////////////////////////////////////////////////////
-define("LICENSE_TEXT", "<b>Personal, Non-commercial Use Only</b>");
+
+
+define("FOOTER_TEXT", "");
 define("COPYRIGHT_NAME", "Netsyms Technologies");
-//////////////////////////////////////////////////////////////

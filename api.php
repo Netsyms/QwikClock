@@ -19,7 +19,7 @@ header("Content-Type: application/json");
 
 $username = $VARS['username'];
 $password = $VARS['password'];
-if (user_exists($username) !== true || authenticate_user($username, $password, $errmsg) !== true || account_has_permission($username, "QWIKCLOCK") !== true) {
+if (user_exists($username) !== true || (authenticate_user($username, $password, $errmsg) !== true && checkAPIKey($password) !== true) || account_has_permission($username, "QWIKCLOCK") !== true) {
     header("HTTP/1.1 403 Unauthorized");
     die("\"403 Unauthorized\"");
 }
@@ -36,14 +36,14 @@ switch ($VARS['action']) {
         $out = ["status" => "OK", "maxresults" => $max, "pong" => true];
         exit(json_encode($out));
     case "punchin":
-        if ($database->has('punches', ['AND' => ['uid' => $_SESSION['uid'], 'out' => null]])) {
+        if ($database->has('punches', ['AND' => ['uid' => $userinfo['uid'], 'out' => null]])) {
             die(json_encode(["status" => "ERROR", "msg" => lang("already punched in", false)]));
         }
 
         $shiftid = null;
-        if ($database->has('assigned_shifts', ['uid' => $_SESSION['uid']])) {
+        if ($database->has('assigned_shifts', ['uid' => $userinfo['uid']])) {
             $minclockintime = strtotime("now + 5 minutes");
-            $shifts = $database->select('shifts', ["[>]assigned_shifts" => ['shiftid' => 'shiftid']], ["shifts.shiftid", "start", "end", "days"], ["AND" =>['uid' => $_SESSION['uid'], 'start[<=]' => date("H:i:s", $minclockintime)]]);
+            $shifts = $database->select('shifts', ["[>]assigned_shifts" => ['shiftid' => 'shiftid']], ["shifts.shiftid", "start", "end", "days"], ["AND" =>['uid' => $userinfo['uid'], 'start[<=]' => date("H:i:s", $minclockintime)]]);
             foreach ($shifts as $shift) {
                 $curday = substr(date("D"), 0, 2);
                 if (strpos($shift['days'], $curday) === FALSE) {
@@ -61,7 +61,7 @@ switch ($VARS['action']) {
             }
         }
 
-        $database->insert('punches', ['uid' => $_SESSION['uid'], 'in' => date("Y-m-d H:i:s"), 'out' => null, 'notes' => '', 'shiftid' => $shiftid]);
+        $database->insert('punches', ['uid' => $userinfo['uid'], 'in' => date("Y-m-d H:i:s"), 'out' => null, 'notes' => '', 'shiftid' => $shiftid]);
         exit(json_encode(["status" => "OK", "msg" => lang("punched in", false)]));
     case "punchout":
         if (!$database->has('punches', ['AND' => ['uid' => $userinfo['uid'], 'out' => null]])) {

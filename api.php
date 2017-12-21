@@ -43,7 +43,7 @@ switch ($VARS['action']) {
         $shiftid = null;
         if ($database->has('assigned_shifts', ['uid' => $userinfo['uid']])) {
             $minclockintime = strtotime("now + 5 minutes");
-            $shifts = $database->select('shifts', ["[>]assigned_shifts" => ['shiftid' => 'shiftid']], ["shifts.shiftid", "start", "end", "days"], ["AND" =>['uid' => $userinfo['uid'], 'start[<=]' => date("H:i:s", $minclockintime)]]);
+            $shifts = $database->select('shifts', ["[>]assigned_shifts" => ['shiftid' => 'shiftid']], ["shifts.shiftid", "start", "end", "days"], ["AND" => ['uid' => $userinfo['uid'], 'start[<=]' => date("H:i:s", $minclockintime)]]);
             foreach ($shifts as $shift) {
                 $curday = substr(date("D"), 0, 2);
                 if (strpos($shift['days'], $curday) === FALSE) {
@@ -69,6 +69,54 @@ switch ($VARS['action']) {
         }
         $database->update('punches', ['uid' => $userinfo['uid'], 'out' => date("Y-m-d H:i:s")], ['out' => null]);
         exit(json_encode(["status" => "OK", "msg" => lang("punched out", false)]));
+    case "getassignedshifts":
+        $shifts = $database->select('shifts', [
+            "[>]assigned_shifts" => [
+                "shiftid" => "shiftid"
+            ]
+                ], [
+            'shifts.shiftid',
+            'shiftname',
+            'start',
+            'end',
+            'days'
+                ], [
+            "uid" => $userinfo['uid']
+                ]
+        );
+        for ($i = 0; $i < count($shifts); $i++) {
+            $shifts[$i]['start_f'] = date(TIME_FORMAT, strtotime($shifts[$i]['start']));
+            $shifts[$i]['end_f'] = date(TIME_FORMAT, strtotime($shifts[$i]['end']));
+            $days = [];
+            $daycodes = str_split($shifts[$i]['days'], 2);
+            foreach ($daycodes as $day) {
+                switch ($day) {
+                    case "Su":
+                        $days[] = lang("sunday", false);
+                        break;
+                    case "Mo":
+                        $days[] = lang("monday", false);
+                        break;
+                    case "Tu":
+                        $days[] = lang("tuesday", false);
+                        break;
+                    case "We":
+                        $days[] = lang("wednesday", false);
+                        break;
+                    case "Th":
+                        $days[] = lang("thursday", false);
+                        break;
+                    case "Fr":
+                        $days[] = lang("friday", false);
+                        break;
+                    case "Sa":
+                        $days[] = lang("saturday", false);
+                        break;
+                }
+            }
+            $shifts[$i]['day_list'] = $days;
+        }
+        exit(json_encode(["status" => "OK", "shifts" => $shifts]));
     default:
         http_response_code(404);
         die("\"404 Action not found\"");

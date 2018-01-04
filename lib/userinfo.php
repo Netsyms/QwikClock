@@ -90,10 +90,10 @@ function isManagerOf($m, $e) {
 
     $resp = json_decode($response->getBody(), TRUE);
     if ($resp['status'] == "OK") {
-        return $resp['managerof'];
+        return $resp['managerof'] === true;
     } else {
         // this shouldn't happen, but in case it does just fake it.
-        return ["name" => $u, "username" => $u, "uid" => $u];
+        return false;
     }
 }
 
@@ -151,6 +151,62 @@ function getManagedUsernames($manageruid) {
     $resp = json_decode($response->getBody(), TRUE);
     if ($resp['status'] == "OK") {
         return $resp['employees'];
+    } else {
+        return [];
+    }
+}
+
+/**
+ * Get a list of the groups the user is a member of, as {['id':1,'name':"abc"],...}
+ * @param int $uid
+ */
+function getGroupsByUID($uid) {
+    $client = new GuzzleHttp\Client();
+
+    $response = $client
+            ->request('POST', PORTAL_API, [
+        'form_params' => [
+            'key' => PORTAL_KEY,
+            'action' => "getgroupsbyuser",
+            'uid' => $uid
+        ]
+    ]);
+
+    if ($response->getStatusCode() > 299) {
+        sendError("Login server error: " . $response->getBody());
+    }
+
+    $resp = json_decode($response->getBody(), TRUE);
+    if ($resp['status'] == "OK") {
+        return $resp['groups'];
+    } else {
+        return [];
+    }
+}
+
+/**
+ * Get a list of the groups the user is a member of, as {['id':1,'name':"abc"],...}
+ * @param int $username
+ */
+function getGroupsByUsername($username) {
+    $client = new GuzzleHttp\Client();
+
+    $response = $client
+            ->request('POST', PORTAL_API, [
+        'form_params' => [
+            'key' => PORTAL_KEY,
+            'action' => "getgroupsbyuser",
+            'username' => $username
+        ]
+    ]);
+
+    if ($response->getStatusCode() > 299) {
+        sendError("Login server error: " . $response->getBody());
+    }
+
+    $resp = json_decode($response->getBody(), TRUE);
+    if ($resp['status'] == "OK") {
+        return $resp['groups'];
     } else {
         return [];
     }

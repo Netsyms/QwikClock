@@ -1,5 +1,4 @@
 <?php
-
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -34,7 +33,7 @@ $totalpunches = count($punches);
             </div>
         </div>
     </div>
-    
+
     <div class="col-xs-12 col-sm-6 col-md-4">
         <div class="panel panel-blue">
             <div class="panel-body">
@@ -77,6 +76,7 @@ $totalpunches = count($punches);
             <th data-priority="1"><i class="fa fa-fw fa-play hidden-xs"></i> <?php lang('in'); ?></th>
             <th data-priority="1"><i class="fa fa-fw fa-stop hidden-xs"></i> <?php lang('out'); ?></th>
             <th data-priority="2"><i class="fa fa-fw fa-sticky-note-o hidden-xs"></i> <?php lang('notes'); ?></th>
+        </tr>
     </tfoot>
 </table>
 

@@ -7,17 +7,6 @@
 require_once __DIR__ . '/../required.php';
 
 redirectifnotloggedin();
-
-
-require_once __DIR__ . "/../lib/dates.php";
-$weekstart = sqldatetime(getstartofweek(WEEK_START));
-$punches = $database->select('punches', ['in', 'out'], ['AND' => ['uid' => $_SESSION['uid'], 'in[>]' => $weekstart]]);
-$punchtimes = [];
-foreach ($punches as $p) {
-    $punchtimes[] = [$p['in'], $p['out']];
-}
-$totalseconds = sumelapsedtimearray($punchtimes);
-$totalpunches = count($punches);
 ?>
 
 <div class="btn-group mgn-btm-10px">
@@ -59,6 +48,7 @@ $totalpunches = count($punches);
             <th data-priority="1"><i class="fa fa-fw fa-play hidden-xs"></i> <?php lang('start'); ?></th>
             <th data-priority="1"><i class="fa fa-fw fa-stop hidden-xs"></i> <?php lang('end'); ?></th>
             <th data-priority="2"><i class="fa fa-fw fa-calendar hidden-xs"></i> <?php lang('days'); ?></th>
+        </tr>
     </tfoot>
 </table>
 

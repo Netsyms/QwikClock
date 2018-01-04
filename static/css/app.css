@@ -90,6 +90,15 @@
     color: red;
 }
 
+#job-btn-bin {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.job-btn {
+    margin: 5px 5px;
+}
+
 /*
 ==============================
             THEMING

@@ -19,7 +19,7 @@ define("PAGES", [
         "title" => "404 error"
     ],
     "punches" => [
-        "title" => "punch card",
+        "title" => "punches",
         "navbar" => true,
         "icon" => "clock-o",
         "styles" => [
@@ -29,6 +29,50 @@ define("PAGES", [
         "scripts" => [
             "static/js/datatables.min.js",
             "static/js/punches.js"
+        ]
+    ],
+    "jobs" => [
+        "title" => "jobs",
+        "navbar" => true,
+        "icon" => "briefcase",
+        "styles" => [
+            "static/css/datatables.min.css",
+            "static/css/tables.css"
+        ],
+        "scripts" => [
+            "static/js/datatables.min.js",
+            "static/js/jobs.js"
+        ]
+    ],
+    "editjobs" => [
+        "title" => "jobs",
+        "navbar" => false,
+        "icon" => "briefcase",
+        "styles" => [
+            "static/css/datatables.min.css",
+            "static/css/tables.css"
+        ],
+        "scripts" => [
+            "static/js/datatables.min.js",
+            "static/js/editjobs.js"
+        ]
+    ],
+    "editjob" => [
+        "title" => "edit job",
+        "navbar" => false
+    ],
+    "editjobhistory" => [
+        "title" => "edit job",
+        "navbar" => false,
+        "styles" => [
+            "static/css/bootstrap-datetimepicker.min.css",
+            "static/css/easy-autocomplete.min.css"
+        ],
+        "scripts" => [
+            "static/js/moment.min.js",
+            "static/js/bootstrap-datetimepicker.min.js",
+            "static/js/jquery.easy-autocomplete.min.js",
+            "static/js/editjobhistory.js"
         ]
     ],
     "shifts" => [
@@ -71,7 +115,7 @@ define("PAGES", [
         ]
     ],
     "export" => [
-        "title" => "report export",
+        "title" => "reports",
         "navbar" => true,
         "icon" => "download",
         "styles" => [

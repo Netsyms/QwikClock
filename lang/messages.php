@@ -106,4 +106,32 @@ define("MESSAGES", [
         "string" => "punch deleted",
         "type" => "success"
     ],
+    "job_changed" => [
+        "string" => "job changed",
+        "type" => "success"
+    ],
+    "job_invalid" => [
+        "string" => "invalid job",
+        "type" => "danger"
+    ],
+    "job_added" => [
+        "string" => "job added",
+        "type" => "success"
+    ],
+    "job_saved" => [
+        "string" => "job saved",
+        "type" => "success"
+    ],
+    "job_deleted" => [
+        "string" => "job deleted",
+        "type" => "success"
+    ],
+    "job_name_used" => [
+        "string" => "job name in use",
+        "type" => "danger"
+    ],
+    "invalid_jobid" => [
+        "string" => "invalid job",
+        "type" => "danger"
+    ],
 ]);

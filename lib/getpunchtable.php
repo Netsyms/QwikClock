@@ -30,7 +30,12 @@ $out = [];
 
 $out['draw'] = intval($VARS['draw']);
 
-$out['recordsTotal'] = $database->count('punches', ['uid' => $managed_uids]);
+if ($managed_uids === false) {
+    $out['recordsTotal'] = $database->count('punches');
+} else {
+    $out['recordsTotal'] = $database->count('punches', ['uid' => $managed_uids]);
+}
+
 $filter = false;
 
 // sort

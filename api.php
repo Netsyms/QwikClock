@@ -140,6 +140,10 @@ switch ($VARS['action']) {
             $out[] = $job;
         }
         exit(json_encode(["status" => "OK", "jobs" => $out]));
+    case "getactivejob":
+        $jobs = [];
+        $job = $database->get('job_tracking', ['[>]jobs' => ['jobid']], ['jobs.jobid (id)', 'jobname (name)', 'color', 'start'], ["AND" => ["uid" => $userinfo['uid'], 'end' => null]]);
+        exit(json_encode(["status" => "OK", "job" => $job]));
     case "setjob":
         if (is_empty($VARS['job'])) {
             exit(json_encode(["status" => "ERROR", "msg" => lang("invalid job", false)]));

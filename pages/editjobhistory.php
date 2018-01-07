@@ -56,7 +56,7 @@ if (isset($VARS['job']) && $database->has('job_tracking', ['id' => $VARS['job']]
                                 foreach ($groups as $g) {
                                     $gids[] = $g['id'];
                                 }
-                                $jobs = $database->select('jobs', ['[>]job_groups' => ['jobid']], ['jobs.jobid', 'jobname'], ["AND" => ['groupid' => $gids, 'deleted' => 0]]);
+                                $jobs = $database->select('jobs', ['[>]job_groups' => ['jobid']], ['jobs.jobid', 'jobname'], ["AND" => ["OR" => ['groupid' => $gids, 'groupid #-1' => -1], 'deleted' => 0]]);
                             } else {
                                 $jobs = $database->select('jobs', ['jobid', 'jobname'], ['deleted' => 0]);
                             }

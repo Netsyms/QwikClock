@@ -59,7 +59,10 @@ define("PAGES", [
     ],
     "editjob" => [
         "title" => "edit job",
-        "navbar" => false
+        "navbar" => false,
+        "scripts" => [
+            "static/js/editjob.js"
+        ]
     ],
     "editjobhistory" => [
         "title" => "edit job",

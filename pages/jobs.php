@@ -28,7 +28,7 @@ redirectifnotloggedin();
         foreach ($groups as $g) {
             $gids[] = $g['id'];
         }
-        $jobs = $database->select('jobs', ['[>]job_groups' => ['jobid']], ['jobs.jobid', 'jobname', 'jobcode', 'color'], ["AND" => ['groupid' => $gids, 'deleted' => 0]]);
+        $jobs = $database->select('jobs', ['[>]job_groups' => ['jobid']], ['jobs.jobid', 'jobname', 'jobcode', 'color'], ["AND" => ["OR" => ['groupid' => $gids, 'groupid #-1' => -1], 'deleted' => 0]]);
     } else {
         $jobs = $database->select('jobs', ['jobid', 'jobname', 'jobcode', 'color'], ['deleted' => 0]);
     }

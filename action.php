@@ -252,7 +252,7 @@ switch ($VARS['action']) {
             foreach ($groups as $g) {
                 $gids[] = $g['id'];
             }
-            $job = $database->has('jobs', ['[>]job_groups' => ['jobid']], ["AND" => ['groupid' => $gids, 'jobs.jobid' => $VARS['job']]]);
+            $job = $database->has('jobs', ['[>]job_groups' => ['jobid']], ["AND" => ["OR" => ['groupid' => $gids, 'groupid #-1' => -1], 'deleted' => 0]]);
         } else {
             $job = $database->has('jobs', 'jobid', ['jobid' => $VARS['job']]);
         }
@@ -273,15 +273,25 @@ switch ($VARS['action']) {
             $name = htmlentities($VARS['jobname']);
             $code = $VARS['jobcode'];
             $color = $VARS['color'];
+            $groups = $VARS['groups'];
 
             if (is_empty($VARS['jobid'])) {
                 if ($database->has('jobs', ['jobname' => $name])) {
                     returnToSender("job_name_used");
                 }
                 $database->insert('jobs', ["jobname" => $name, "jobcode" => $code, "color" => $color]);
+                $jobid = $database->id();
+                $database->delete('job_groups', ['jobid' => $jobid]);
+                foreach ($groups as $g) {
+                    $database->insert('job_groups', ['jobid' => $jobid, 'groupid' => $g]);
+                }
                 returnToSender("job_added");
             } else if ($database->has('jobs', ['jobid' => $VARS['jobid']])) {
                 $database->update('jobs', ["jobname" => $name, "jobcode" => $code, "color" => $color], ["jobid" => $VARS['jobid']]);
+                $database->delete('job_groups', ['jobid' => $VARS['jobid']]);
+                foreach ($groups as $g) {
+                    $database->insert('job_groups', ['jobid' => $VARS['jobid'], 'groupid' => $g]);
+                }
                 returnToSender("job_saved");
             } else {
                 returnToSender("invalid_jobid");

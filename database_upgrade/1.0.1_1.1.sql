@@ -16,7 +16,7 @@ DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `job_groups` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `groupid` VARCHAR(45) NOT NULL,
+  `groupid` INT(11) NOT NULL,
   `jobid` INT(11) NOT NULL,
   PRIMARY KEY (`id`, `groupid`, `jobid`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),

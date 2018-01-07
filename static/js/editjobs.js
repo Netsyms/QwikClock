@@ -29,6 +29,6 @@ var jobtable = $('#jobtable').DataTable({
         }
     ],
     order: [
-        [2, 'desc']
+        [2, 'asc']
     ]
 });

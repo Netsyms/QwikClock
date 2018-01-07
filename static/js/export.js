@@ -62,3 +62,26 @@ $(function () {
 });
 
 $('#user-not-managed-text').css('visibility', 'hidden');
+
+$("#type").change(function () {
+    switch ($("#type").val()) {
+        case "shifts":
+            $('#date-filter').hide('fast');
+            $('#user-filter').show('fast');
+            $('#deleted-filter').hide('fast');
+            break;
+        case "alljobs":
+            $('#date-filter').hide('fast');
+            $('#user-filter').hide('fast');
+            $('#deleted-filter').show('fast');
+            break;
+        default:
+            $('#date-filter').show('fast');
+            $('#user-filter').show('fast');
+            $('#deleted-filter').hide('fast');
+            break;
+    }
+});
+
+$('#date-filter').hide();
+$('#deleted-filter').hide();

@@ -146,4 +146,9 @@ define("STRINGS", [
     "job added" => "Job added.",
     "job deleted" => "Job deleted.",
     "show all" => "Show all",
+    "id" => "ID",
+    "deleted" => "Deleted",
+    "groups" => "Groups",
+    "all jobs" => "All Jobs (export)",
+    "include deleted" => "Include Deleted"
 ]);

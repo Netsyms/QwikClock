@@ -64,7 +64,7 @@ if (LOADED) {
         $user = getUserByUsername($VARS['user']);
     }
     if (isset($VARS['type']) && isset($VARS['format'])) {
-        generateReport($VARS['type'], $VARS['format'], $user, $VARS['startdate'], $VARS['enddate']);
+        generateReport($VARS['type'], $VARS['format'], $user, $VARS['startdate'], $VARS['enddate'], $VARS['deleted'] == "1");
         die();
     } else {
         lang("invalid parameters");
@@ -241,7 +241,61 @@ function getTotalsReport($user = null, $start = null, $end = null) {
     return $out;
 }
 
-function getReportData($type, $user = null, $start = null, $end = null) {
+function getJobsReport($showdeleted = true) {
+    global $database;
+    $jobs = $database->select('jobs', ['jobid (id)', 'jobname (name)', 'jobcode (code)', 'color', 'deleted']);
+    $all_groups = [];
+    $client = new GuzzleHttp\Client();
+
+    $response = $client
+            ->request('POST', PORTAL_API, [
+        'form_params' => [
+            'key' => PORTAL_KEY,
+            'action' => "getgroups"
+        ]
+    ]);
+    if ($response->getStatusCode() > 299) {
+        sendError($response->getBody());
+    }
+    $resp = json_decode($response->getBody(), TRUE);
+    if ($resp['status'] == "OK") {
+        foreach ($resp['groups'] as $g) {
+            $all_groups[$g['id']] = $g['name'];
+        }
+    }
+    $header = [lang("id", false), lang("name", false), lang("code", false), lang("groups", false)];
+    if ($showdeleted) {
+        $header[] = lang('deleted', false);
+    }
+    $out = [$header];
+    for ($i = 0; $i < count($jobs); $i++) {
+        if ($jobs[$i]["deleted"] == 1 && !$showdeleted) {
+            continue;
+        }
+        $groups = $database->select("job_groups", 'groupid', ['jobid' => $jobs[$i]["id"]]);
+        $groupnames = [];
+        foreach ($groups as $g) {
+            if ($g == -1) {
+                $groupnames[] = lang("all groups", false);
+            } else {
+                $groupnames[] = $all_groups[$g];
+            }
+        }
+        $row = [
+            $jobs[$i]["id"],
+            $jobs[$i]["name"],
+            $jobs[$i]["code"],
+            implode("|", $groupnames)
+        ];
+        if ($showdeleted) {
+            $row[] = $jobs[$i]["deleted"] == 1 ? "X" : "";
+        }
+        $out[] = $row;
+    }
+    return $out;
+}
+
+function getReportData($type, $user = null, $start = null, $end = null, $deleted = true) {
     switch ($type) {
         case "shifts":
             return getShiftReport($user);
@@ -252,6 +306,8 @@ function getReportData($type, $user = null, $start = null, $end = null) {
         case "totals":
             return getTotalsReport($user, $start, $end);
             break;
+        case "alljobs":
+            return getJobsReport($deleted);
         default:
             return [["error"]];
     }
@@ -388,8 +444,8 @@ STYLE
     echo $out;
 }
 
-function generateReport($type, $format, $user = null, $start = null, $end = null) {
-    $data = getReportData($type, $user, $start, $end);
+function generateReport($type, $format, $user = null, $start = null, $end = null, $deleted = true) {
+    $data = getReportData($type, $user, $start, $end, $deleted);
     switch ($format) {
         case "ods":
             dataToODS($data, $type, $user, $start, $end);

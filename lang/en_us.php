@@ -150,5 +150,10 @@ define("STRINGS", [
     "deleted" => "Deleted",
     "groups" => "Groups",
     "all jobs" => "All Jobs (export)",
-    "include deleted" => "Include Deleted"
+    "include deleted" => "Include Deleted",
+    "visible to groups" => "Visible to Groups",
+    "choose a group" => "Choose a group",
+    "all groups" => "All Groups",
+    "shift name" => "Shift Name",
+    "workers" => "Workers"
 ]);

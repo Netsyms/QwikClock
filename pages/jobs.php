@@ -58,7 +58,7 @@ redirectifnotloggedin();
             <th data-priority="1"><?php lang('actions'); ?></th>
             <th data-priority="1"><i class="fa fa-fw fa-briefcase hidden-xs"></i> <?php lang('job'); ?></th>
             <th data-priority="2"><i class="fa fa-fw fa-play hidden-xs"></i> <?php lang('start'); ?></th>
-            <th data-priority="2"><i class="fa fa-fw fa-stop hidden-xs"></i> <?php lang('stop'); ?></th>
+            <th data-priority="2"><i class="fa fa-fw fa-stop hidden-xs"></i> <?php lang('end'); ?></th>
             <th data-priority="3"><i class="fa fa-fw fa-user hidden-xs"></i> <?php lang('user'); ?></th>
         </tr>
     </thead>
@@ -71,7 +71,7 @@ redirectifnotloggedin();
             <th data-priority="1"><?php lang('actions'); ?></th>
             <th data-priority="1"><i class="fa fa-fw fa-briefcase hidden-xs"></i> <?php lang('job'); ?></th>
             <th data-priority="2"><i class="fa fa-fw fa-play hidden-xs"></i> <?php lang('start'); ?></th>
-            <th data-priority="2"><i class="fa fa-fw fa-stop hidden-xs"></i> <?php lang('stop'); ?></th>
+            <th data-priority="2"><i class="fa fa-fw fa-stop hidden-xs"></i> <?php lang('end'); ?></th>
             <th data-priority="3"><i class="fa fa-fw fa-user hidden-xs"></i> <?php lang('user'); ?></th>
         </tr>
     </tfoot>

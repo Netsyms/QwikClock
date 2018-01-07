@@ -295,19 +295,69 @@ function getJobsReport($showdeleted = true) {
     return $out;
 }
 
+function getJobHistoryReport($user = null, $start = null, $end = null) {
+    global $database;
+    global $allowed_users;
+    $where = [];
+    if ((bool) strtotime($start) == TRUE) {
+        $where["OR #start"] = [
+            "start[>=]" => date("Y-m-d", strtotime($start)),
+            "end[>=]" => date("Y-m-d", strtotime($start))
+        ];
+    }
+    if ((bool) strtotime($end) == TRUE) {
+        // Make the date be the end of the day, not the start
+        $where["start[<=]"] = date("Y-m-d", strtotime($end)) . " 23:59:59";
+    }
+    if ($user != null && array_key_exists('uid', $user) && ($allowed_users === true || in_array($user['uid'], $allowed_users))) {
+        $where["uid"] = $user['uid'];
+    } else if ($user != null && array_key_exists('uid', $user) && $allowed_users !== true && !in_array($user['uid'], $allowed_users)) {
+        $where["uid"] = -1;
+    } else {
+        if ($allowed_users !== true) {
+            $where["uid"] = $allowed_users;
+        }
+    }
+    if (count($where) > 1) {
+        $where = ["AND" => $where];
+    }
+    $jobs = $database->select(
+            "job_tracking", [
+        "[>]jobs" => ["jobid" => "jobid"]
+            ], [
+        "jobs.jobid", "uid", "start", "end", "jobname", "jobcode"
+            ], $where
+    );
+    $header = [lang("name", false), lang("job", false), lang("code", false), lang("start", false), lang("end", false)];
+    $out = [$header];
+    $usercache = [];
+    for ($i = 0; $i < count($jobs); $i++) {
+        if (!array_key_exists($jobs[$i]["uid"], $usercache)) {
+            $usercache[$jobs[$i]["uid"]] = getUserByID($jobs[$i]["uid"]);
+        }
+        $out[] = [
+            $usercache[$jobs[$i]["uid"]]["name"] . " (" . $usercache[$jobs[$i]["uid"]]["username"] . ")",
+            $jobs[$i]['jobname'],
+            $jobs[$i]['jobcode'],
+            date(DATETIME_FORMAT, strtotime($jobs[$i]['start'])),
+            (is_null($jobs[$i]['end']) ? "" : date(DATETIME_FORMAT, strtotime($jobs[$i]['end']))),
+        ];
+    }
+    return $out;
+}
+
 function getReportData($type, $user = null, $start = null, $end = null, $deleted = true) {
     switch ($type) {
         case "shifts":
             return getShiftReport($user);
-            break;
         case "punches":
             return getPunchReport($user, $start, $end);
-            break;
         case "totals":
             return getTotalsReport($user, $start, $end);
-            break;
         case "alljobs":
             return getJobsReport($deleted);
+        case "jobs":
+            return getJobHistoryReport($user, $start, $end);
         default:
             return [["error"]];
     }

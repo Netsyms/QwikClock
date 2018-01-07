@@ -27,6 +27,7 @@ if (!account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE") && !accou
                                     <option value="shifts"><?php lang("shifts") ?></option>
                                     <option value="punches"><?php lang("punches") ?></option>
                                     <option value="totals"><?php lang("totals") ?></option>
+                                    <option value="jobs"><?php lang("jobs") ?></option>
                                     <option value="alljobs"><?php lang("all jobs") ?></option>
                                 </select>
                             </div>

@@ -252,7 +252,7 @@ switch ($VARS['action']) {
             foreach ($groups as $g) {
                 $gids[] = $g['id'];
             }
-            $job = $database->has('jobs', ['[>]job_groups' => ['jobid']], ["AND" => ["OR" => ['groupid' => $gids, 'groupid #-1' => -1], 'deleted' => 0]]);
+            $job = $database->has('jobs', ['[>]job_groups' => ['jobid']], ["AND" => ["OR" => ['groupid' => $gids, 'groupid #-1' => -1], 'deleted' => 0, 'jobs.jobid' => $VARS['job']]]);
         } else {
             $job = $database->has('jobs', 'jobid', ['jobid' => $VARS['job']]);
         }

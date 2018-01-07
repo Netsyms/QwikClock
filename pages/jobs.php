@@ -28,12 +28,17 @@ redirectifnotloggedin();
         foreach ($groups as $g) {
             $gids[] = $g['id'];
         }
-        $jobs = $database->select('jobs', ['[>]job_groups' => ['jobid']], ['jobs.jobid', 'jobname', 'jobcode', 'color'], ["AND" => ["OR" => ['groupid' => $gids, 'groupid #-1' => -1], 'deleted' => 0]]);
+        $jobs = $database->select('job_groups', ['[>]jobs' => ['jobid']], ['jobs.jobid', 'jobname', 'jobcode', 'color'], ["AND" => ["OR" => ['groupid' => $gids, 'groupid #-1' => -1], 'deleted' => 0]]);
     } else {
         $jobs = $database->select('jobs', ['jobid', 'jobname', 'jobcode', 'color'], ['deleted' => 0]);
     }
 
+    $jobids = [];
     foreach ($jobs as $job) {
+        if (in_array($job['jobid'], $jobids)) {
+            continue;
+        }
+        $jobids[] = $job['jobid'];
         $color = "default";
         if (!is_null($job['color']) && $job['color'] != "") {
             $color = $job['color'];

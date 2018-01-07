@@ -7,7 +7,7 @@
 
 /**
  * Simple JSON API to allow other apps to access data from this app.
- * 
+ *
  * Requests can be sent via either GET or POST requests.  POST is recommended
  * as it has a lower chance of being logged on the server, exposing unencrypted
  * user passwords.
@@ -117,6 +117,56 @@ switch ($VARS['action']) {
             $shifts[$i]['day_list'] = $days;
         }
         exit(json_encode(["status" => "OK", "shifts" => $shifts]));
+    case "getjobs":
+        $jobs = [];
+        if ($database->count("job_groups") > 0) {
+            require_once __DIR__ . "/lib/userinfo.php";
+            $groups = getGroupsByUID($userinfo['uid']);
+            $gids = [];
+            foreach ($groups as $g) {
+                $gids[] = $g['id'];
+            }
+            $jobs = $database->select('jobs', ['[>]job_groups' => ['jobid']], ['jobs.jobid (id)', 'jobname (name)', 'jobcode (code)', 'color'], ["AND" => ["OR" => ['groupid' => $gids, 'groupid #-1' => -1], 'deleted' => 0]]);
+        } else {
+            $jobs = $database->select('jobs', ['jobid (id)', 'jobname (name)', 'jobcode (code)', 'color'], ['deleted' => 0]);
+        }
+        $jobids = [];
+        $out = [];
+        foreach ($jobs as $job) {
+            if (in_array($job['id'], $jobids)) {
+                continue;
+            }
+            $jobids[] = $job['id'];
+            $out[] = $job;
+        }
+        exit(json_encode(["status" => "OK", "jobs" => $out]));
+    case "setjob":
+        if (is_empty($VARS['job'])) {
+            exit(json_encode(["status" => "ERROR", "msg" => lang("invalid job", false)]));
+        }
+        if ($database->count("job_groups") > 0) {
+            require_once __DIR__ . "/lib/userinfo.php";
+            $groups = getGroupsByUID($userinfo['uid']);
+            $gids = [];
+            foreach ($groups as $g) {
+                $gids[] = $g['id'];
+            }
+            $job = $database->has('jobs', ['[>]job_groups' => ['jobid']], ["AND" => ["OR" => ['groupid' => $gids, 'groupid #-1' => -1], 'deleted' => 0, 'jobs.jobid' => $VARS['job']]]);
+        } else {
+            $job = $database->has('jobs', 'jobid', ['jobid' => $VARS['job']]);
+        }
+        if ($job === true) {
+            // Stop other jobs
+            $database->update('job_tracking', ['end' => date("Y-m-d H:i:s")], ['AND' => ['uid' => $userinfo['uid'], 'end' => null]]);
+            $database->insert('job_tracking', ['uid' => $userinfo['uid'], 'jobid' => $VARS['job'], 'start' => date("Y-m-d H:i:s")]);
+            exit(json_encode(["status" => "OK", "msg" => lang("job changed", false)]));
+        } else if ($VARS['job'] == "-1") {
+            $database->update('job_tracking', ['end' => date("Y-m-d H:i:s")], ['AND' => ['uid' => $userinfo['uid'], 'end' => null]]);
+            exit(json_encode(["status" => "OK", "msg" => lang("job changed", false)]));
+        } else {
+            exit(json_encode(["status" => "ERROR", "msg" => lang("invalid job", false)]));
+        }
+        break;
     default:
         http_response_code(404);
         die("\"404 Action not found\"");

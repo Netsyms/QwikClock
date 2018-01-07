@@ -67,6 +67,8 @@ switch ($VARS['action']) {
         if (!$database->has('punches', ['AND' => ['uid' => $userinfo['uid'], 'out' => null]])) {
             die(json_encode(["status" => "ERROR", "msg" => lang("already punched out", false)]));
         }
+        // Stop active job
+        $database->update('job_tracking', ['end' => date("Y-m-d H:i:s")], ['AND' => ['uid' => $userinfo['uid'], 'end' => null]]);
         $database->update('punches', ['uid' => $userinfo['uid'], 'out' => date("Y-m-d H:i:s")], ['out' => null]);
         exit(json_encode(["status" => "OK", "msg" => lang("punched out", false)]));
     case "getassignedshifts":

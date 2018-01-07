@@ -8,6 +8,17 @@ require_once __DIR__ . '/../required.php';
 redirectifnotloggedin();
 ?>
 <div class="btn-group mgn-btm-10px">
+    <div class="btn btn-default">
+        <?php
+        lang("current job");
+
+        $currentjob = $database->get('job_tracking', ['[>]jobs' => ['jobid']], ['jobname (name)', 'color'], ["AND" => ["uid" => $_SESSION['uid'], 'end' => null]]);
+        if (!$currentjob) {
+            $currentjob = ["color" => "white", "name" => lang("none", false)];
+        }
+        echo ' <span class="label label-' . $currentjob['color'] . '">&nbsp;&nbsp;</span> ' . $currentjob['name'];
+        ?>
+    </div>
     <?php
     if (account_has_permission($_SESSION['username'], "QWIKCLOCK_ADMIN")) {
         ?>

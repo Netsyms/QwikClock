@@ -155,5 +155,6 @@ define("STRINGS", [
     "choose a group" => "Choose a group",
     "all groups" => "All Groups",
     "shift name" => "Shift Name",
-    "workers" => "Workers"
+    "workers" => "Workers",
+    "current job" => "Current job: "
 ]);

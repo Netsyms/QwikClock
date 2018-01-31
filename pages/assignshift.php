@@ -27,17 +27,15 @@ if ($VARS['shift'] && $database->has('shifts', ['shiftid' => $VARS['shift']])) {
 ?>
 
 <form role="form" action="action.php" method="POST">
-    <div class="panel panel-blue">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                <i class="fa fa-calendar-o"></i> <?php lang("assign shift"); ?>
+    <div class="card border-blue">
+            <h3 class="card-header text-blue">
+                <i class="fas fa-calendar"></i> <?php lang("assign shift"); ?>
             </h3>
-        </div>
-        <div class="panel-body">
+        <div class="card-body">
             <div class="row">
-                <div class="col-xs-12 col-md-6">
+                <div class="col-12 col-md-6">
                     <div class="form-group">
-                        <label for="shift"><i class="fa fa-font"></i> <?php lang("shift"); ?></label><br />
+                        <label for="shift"><i class="fas fa-font"></i> <?php lang("shift"); ?></label><br />
                         <select name="shift" required="required" class="form-control" id="shift-select">
                             <option value="" selected><?php lang("choose a shift"); ?></option>
                             <?php
@@ -55,14 +53,14 @@ if ($VARS['shift'] && $database->has('shifts', ['shiftid' => $VARS['shift']])) {
                 <?php
                 if ($shift !== false) {
                     ?>
-                    <div class="col-xs-12 col-md-6">
-                        <label for="people-box"><i class="fa fa-user"></i> <?php lang("people"); ?></label><br />
-                        <div class="row">
-                            <div class="col-xs-8 col-sm-10 col-md-9 col-lg-10">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="people-box"><i class="fa fa-user"></i> <?php lang("people"); ?></label><br />
+                            <div class="input-group">
                                 <input type="text" id="people-box" class="form-control" placeholder="<?php lang("type to add a person") ?>" />
-                            </div>
-                            <div class="col-xs-4 col-sm-2 col-md-3 col-lg-2">
-                                <button class="btn btn-default" type="button" id="addpersonbtn"><i class="fa fa-plus"></i> <?php lang("add") ?></button>
+                                <div class="input-group-append">
+                                    <button class="btn btn-default" type="button" id="addpersonbtn"><i class="fa fa-plus"></i> <?php lang("add") ?></button>
+                                </div>
                             </div>
                         </div>
                         <div class="list-group" id="peoplelist">
@@ -70,7 +68,7 @@ if ($VARS['shift'] && $database->has('shifts', ['shiftid' => $VARS['shift']])) {
                             foreach ($assigned as $user) {
                                 ?>
                                 <div class="list-group-item" data-user="<?php echo $user; ?>">
-                                    <?php echo $user; ?> <div class="btn btn-danger btn-sm pull-right rmperson"><i class="fa fa-trash-o"></i></div><input type="hidden" name="users[]" value="<?php echo $user; ?>" />
+                                    <?php echo $user; ?> <div class="btn btn-danger btn-sm float-right rmperson"><i class="fas fa-trash"></i></div><input type="hidden" name="users[]" value="<?php echo $user; ?>" />
                                 </div>
                                 <?php
                             }
@@ -86,8 +84,8 @@ if ($VARS['shift'] && $database->has('shifts', ['shiftid' => $VARS['shift']])) {
         <input type="hidden" name="action" value="assignshift" />
         <input type="hidden" name="source" value="shifts" />
 
-        <div class="panel-footer">
-            <button type="submit" class="btn btn-success"><i class="fa fa-floppy-o"></i> <?php lang("save"); ?></button>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> <?php lang("save"); ?></button>
         </div>
     </div>
 </form>

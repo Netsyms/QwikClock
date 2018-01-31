@@ -10,7 +10,7 @@ define("PAGES", [
     "home" => [
         "title" => "home",
         "navbar" => true,
-        "icon" => "home",
+        "icon" => "fas fa-home",
         "scripts" => [
             "static/js/home.js"
         ]
@@ -21,7 +21,7 @@ define("PAGES", [
     "punches" => [
         "title" => "punches",
         "navbar" => true,
-        "icon" => "clock-o",
+        "icon" => "fas fa-clock",
         "styles" => [
             "static/css/datatables.min.css",
             "static/css/tables.css"
@@ -34,7 +34,7 @@ define("PAGES", [
     "jobs" => [
         "title" => "jobs",
         "navbar" => true,
-        "icon" => "briefcase",
+        "icon" => "fas fa-briefcase",
         "styles" => [
             "static/css/datatables.min.css",
             "static/css/tables.css"
@@ -47,7 +47,7 @@ define("PAGES", [
     "editjobs" => [
         "title" => "jobs",
         "navbar" => false,
-        "icon" => "briefcase",
+        "icon" => "fas fa-briefcase",
         "styles" => [
             "static/css/datatables.min.css",
             "static/css/tables.css"
@@ -68,12 +68,12 @@ define("PAGES", [
         "title" => "edit job",
         "navbar" => false,
         "styles" => [
-            "static/css/bootstrap-datetimepicker.min.css",
+            "static/css/tempusdominus-bootstrap-4.min.css",
             "static/css/easy-autocomplete.min.css"
         ],
         "scripts" => [
             "static/js/moment.min.js",
-            "static/js/bootstrap-datetimepicker.min.js",
+            "static/js/tempusdominus-bootstrap-4.min.js",
             "static/js/jquery.easy-autocomplete.min.js",
             "static/js/editjobhistory.js"
         ]
@@ -81,7 +81,7 @@ define("PAGES", [
     "shifts" => [
         "title" => "shifts",
         "navbar" => true,
-        "icon" => "calendar",
+        "icon" => "fas fa-calendar",
         "styles" => [
             "static/css/datatables.min.css",
             "static/css/tables.css"
@@ -95,24 +95,24 @@ define("PAGES", [
         "title" => "new shift",
         "navbar" => false,
         "styles" => [
-            "static/css/bootstrap-datetimepicker.min.css"
+            "static/css/tempusdominus-bootstrap-4.min.css"
         ],
         "scripts" => [
             "static/js/moment.min.js",
-            "static/js/bootstrap-datetimepicker.min.js",
-            "static/js/addshift.js"
+            "static/js/tempusdominus-bootstrap-4.min.js",
+            "static/js/editshift.js"
         ]
     ],
     "editpunch" => [
         "title" => "edit punch",
         "navbar" => false,
         "styles" => [
-            "static/css/bootstrap-datetimepicker.min.css",
+            "static/css/tempusdominus-bootstrap-4.min.css",
             "static/css/easy-autocomplete.min.css"
         ],
         "scripts" => [
             "static/js/moment.min.js",
-            "static/js/bootstrap-datetimepicker.min.js",
+            "static/js/tempusdominus-bootstrap-4.min.js",
             "static/js/jquery.easy-autocomplete.min.js",
             "static/js/editpunch.js"
         ]
@@ -120,14 +120,14 @@ define("PAGES", [
     "export" => [
         "title" => "reports",
         "navbar" => true,
-        "icon" => "download",
+        "icon" => "fas fa-download",
         "styles" => [
-            "static/css/bootstrap-datetimepicker.min.css",
+            "static/css/tempusdominus-bootstrap-4.min.css",
             "static/css/easy-autocomplete.min.css"
         ],
         "scripts" => [
             "static/js/moment.min.js",
-            "static/js/bootstrap-datetimepicker.min.js",
+            "static/js/tempusdominus-bootstrap-4.min.js",
             "static/js/jquery.easy-autocomplete.min.js",
             "static/js/export.js"
         ]

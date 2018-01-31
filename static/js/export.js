@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-$("#genrptbtn").click(function () {
+$(".genrptbtn").click(function () {
     setTimeout(function () {
         window.location.reload();
     }, 1000)
@@ -53,11 +53,23 @@ $('#user-box').on("keypress", function () {
 $(function () {
     $('#startdate').datetimepicker({
         format: "MMM D YYYY",
-        useCurrent: false
+        useCurrent: false,
+        icons: {
+            time: "fas fa-clock",
+            date: "fas fa-calendar",
+            up: "fas fa-arrow-up",
+            down: "fas fa-arrow-down"
+        }
     });
     $('#enddate').datetimepicker({
         format: "MMM D YYYY"/*"YYYY-M-DTH:m"*/,
-        useCurrent: true
+        useCurrent: true,
+        icons: {
+            time: "fas fa-clock",
+            date: "fas fa-calendar",
+            up: "fas fa-arrow-up",
+            down: "fas fa-arrow-down"
+        }
     });
 });
 

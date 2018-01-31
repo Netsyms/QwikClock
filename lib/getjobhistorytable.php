@@ -112,16 +112,16 @@ for ($i = 0; $i < count($jobs); $i++) {
     $jobs[$i][0] = "";
     if ($_SESSION['uid'] == $jobs[$i]['uid']) {
         if ($editself) {
-            $jobs[$i][1] = '<a class="btn btn-blue btn-xs" href="app.php?page=editjobhistory&job=' . $jobs[$i]['id'] . '"><i class="fa fa-pencil-square-o"></i> ' . lang("edit", false) . '</a>';
+            $jobs[$i][1] = '<a class="btn btn-blue btn-sm" href="app.php?page=editjobhistory&job=' . $jobs[$i]['id'] . '"><i class="fas fa-edit"></i> ' . lang("edit", false) . '</a>';
         } else {
             $jobs[$i][1] = "";
         }
     } else if ($showmanaged) {
-        $jobs[$i][1] = '<a class="btn btn-blue btn-xs" href="app.php?page=editjobhistory&job=' . $jobs[$i]['id'] . '"><i class="fa fa-pencil-square-o"></i> ' . lang("edit", false) . '</a>';
+        $jobs[$i][1] = '<a class="btn btn-blue btn-sm" href="app.php?page=editjobhistory&job=' . $jobs[$i]['id'] . '"><i class="fas fa-edit"></i> ' . lang("edit", false) . '</a>';
     } else {
         $jobs[$i][1] = "";
     }
-    $jobs[$i][2] = '<span class="label label-' . $jobs[$i]['color'] . '">&nbsp;&nbsp;</span> ' . ($jobs[$i]['deleted'] == 1 ? "<s>" : "") . $jobs[$i]['jobname'] . ($jobs[$i]['deleted'] == 1 ? "</s>" : "");
+    $jobs[$i][2] = '<span class="badge mr-1 px-2 py-1 badge-' . $jobs[$i]['color'] . '">&nbsp;</span> ' . ($jobs[$i]['deleted'] == 1 ? "<s>" : "") . $jobs[$i]['jobname'] . ($jobs[$i]['deleted'] == 1 ? "</s>" : "");
     $jobs[$i][3] = date(DATETIME_FORMAT, strtotime($jobs[$i]['start']));
     if (is_null($jobs[$i]['end'])) {
         $jobs[$i][4] = lang("na", false);

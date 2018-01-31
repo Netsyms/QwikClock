@@ -108,7 +108,7 @@ $showeditbtn = account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE")
 for ($i = 0; $i < count($shifts); $i++) {
     $shifts[$i][0] = "";
     if ($showeditbtn) {
-        $shifts[$i][1] = '<a class="btn btn-blue btn-xs" href="app.php?page=editshift&id=' . $shifts[$i]['shiftid'] . '"><i class="fa fa-pencil-square-o"></i> ' . lang("edit", false) . '</a>';
+        $shifts[$i][1] = '<a class="btn btn-blue btn-sm" href="app.php?page=editshift&id=' . $shifts[$i]['shiftid'] . '"><i class="fas fa-edit"></i> ' . lang("edit", false) . '</a>';
     } else {
         $shifts[$i][1] = "";
     }

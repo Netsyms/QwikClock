@@ -1,0 +1,159 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+.banner-image {
+    max-height: 100px;
+    margin: 2em auto;
+    border: 1px solid grey;
+    border-radius: 12px;
+}
+
+.navbar-brand {
+    font-size: 110%;
+}
+
+.navbar-brand img {
+    height: 35px;
+    padding-bottom: 12px;
+    padding-left: 5px;
+}
+
+.pad-75px {
+    height: 75px;
+}
+
+.mgn-btm-10px {
+    margin-bottom: 10px;
+}
+
+.mgn-top-8px {
+    margin-top: 8px;
+}
+
+.black-text {
+    color: black;
+}
+
+#seconds_bar {
+    width: 100%;
+    height: 5px;
+    padding-bottom: 5px;
+}
+
+#seconds_bar_line {
+    background-color: #ffc107;
+    height: 5px;
+}
+
+#days-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#days-list .checkbox:first-child {
+    margin-top: -6px;
+}
+
+#days-list-container {
+    padding-top: 8px;
+}
+
+.inblock {
+    display: inline-block;
+}
+
+.wrap-break-word {
+    word-wrap: break-word;
+}
+
+.dark-text {
+    color: #01579b;
+}
+
+.footer {
+    margin-top: 10em;
+    text-align: center;
+}
+
+#showing-all {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+#user-box {
+    display: inline-block;
+}
+
+.red {
+    color: red;
+}
+
+#job-btn-bin {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.job-btn {
+    margin: 5px 5px;
+}
+
+/*
+==============================
+            THEMING
+==============================
+
+Changing the .navbar-inverse background should be enough on modern browsers.
+If this app is to be used on IE < 9 (not supported), also set a background-color
+to replace the rgba()s.
+
+To use a material-color.css navbar theme, remove all the theming styles in this
+file and add a .navbar-[color] class to the navbar in app.php.
+*/
+
+/* navbar background */
+.navbar-inverse {
+    /* background-color: green; */
+}
+
+/* Selected page background */
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+    background: rgba(0,0,0,.2);
+}
+
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+    border-color: rgba(0,0,0,.2);
+}
+
+.navbar-inverse .navbar-toggle .icon-bar {
+    background-color: white;
+}
+
+.navbar-inverse .navbar-brand {
+    color: white;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: white;
+}
+
+.navbar-inverse .navbar-link {
+    color: white;
+}
+
+
+@media screen and (max-width: 767px) {
+    button.navbar-toggle[data-toggle="collapse"] {
+        float: left;
+        margin-left: 15px;
+    }
+
+    .navbar-header .navbar-brand {
+        margin-left: -20px;
+    }
+
+    .navbar-header .navbar-brand img {
+        display: none;
+    }
+}

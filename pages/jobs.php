@@ -16,19 +16,19 @@ redirectifnotloggedin();
         if (!$currentjob) {
             $currentjob = ["color" => "white", "name" => lang("none", false)];
         }
-        echo ' <span class="label label-' . $currentjob['color'] . '">&nbsp;&nbsp;</span> ' . $currentjob['name'];
+        echo ' <span class="badge ml-1 px-2 py-1 badge-' . $currentjob['color'] . '">&nbsp;</span> ' . $currentjob['name'];
         ?>
     </div>
     <?php
     if (account_has_permission($_SESSION['username'], "QWIKCLOCK_ADMIN")) {
         ?>
-        <a href="app.php?page=editjobs" class="btn btn-primary"><i class="fa fa-pencil"></i> <?php lang("edit jobs"); ?></a>
+        <a href="app.php?page=editjobs" class="btn btn-primary"><i class="fas fa-edit"></i> <?php lang("edit jobs"); ?></a>
         <?php
     }
     ?>
 </div>
 
-<p class="page-header h5"><i class="fa fa-briefcase fa-fw"></i> <?php lang("select a job") ?></p>
+<h2 class="my-4"><i class="fas fa-briefcase fa-fw"></i> <?php lang("select a job") ?></h2>
 <div class="container" id="job-btn-bin">
     <?php
     $jobs = [];
@@ -56,26 +56,26 @@ redirectifnotloggedin();
         }
         ?>
         <a class="job-btn" href="action.php?action=setjob&source=jobs&job=<?php echo $job['jobid']; ?>">
-            <span class="btn btn-<?php echo $color; ?>"><?php echo $job['jobname']; ?></span>
+            <span class="btn m-1 btn-<?php echo $color; ?>"><?php echo $job['jobname']; ?></span>
         </a>
         <?php
     }
     ?>
     <a class="job-btn" href="action.php?action=setjob&source=jobs&job=-1">
-        <span class="btn btn-danger"><i class="fa fa-times"></i> <?php lang("none"); ?></span>
+        <span class="btn btn-danger"><i class="fas fa-times"></i> <?php lang("none"); ?></span>
     </a>
 </div>
 
-<p class="page-header h5"><i class="fa fa-history fa-fw"></i> <?php lang("job history") ?></p>
-<table id="jobtable" class="table table-bordered table-striped">
+<h2 class="my-4"><i class="fas fa-history fa-fw"></i> <?php lang("job history") ?></h2>
+<table id="jobtable" class="table table-bordered table-hover table-sm">
     <thead>
         <tr>
             <th data-priority="0"></th>
             <th data-priority="1"><?php lang('actions'); ?></th>
-            <th data-priority="1"><i class="fa fa-fw fa-briefcase hidden-xs"></i> <?php lang('job'); ?></th>
-            <th data-priority="2"><i class="fa fa-fw fa-play hidden-xs"></i> <?php lang('start'); ?></th>
-            <th data-priority="2"><i class="fa fa-fw fa-stop hidden-xs"></i> <?php lang('end'); ?></th>
-            <th data-priority="3"><i class="fa fa-fw fa-user hidden-xs"></i> <?php lang('user'); ?></th>
+            <th data-priority="1"><i class="fas fa-fw fa-briefcase d-none d-md-inline"></i> <?php lang('job'); ?></th>
+            <th data-priority="2"><i class="fas fa-fw fa-play d-none d-md-inline"></i> <?php lang('start'); ?></th>
+            <th data-priority="2"><i class="fas fa-fw fa-stop d-none d-md-inline"></i> <?php lang('end'); ?></th>
+            <th data-priority="3"><i class="fas fa-fw fa-user d-none d-md-inline"></i> <?php lang('user'); ?></th>
         </tr>
     </thead>
     <tbody>
@@ -85,10 +85,10 @@ redirectifnotloggedin();
         <tr>
             <th data-priority="0"></th>
             <th data-priority="1"><?php lang('actions'); ?></th>
-            <th data-priority="1"><i class="fa fa-fw fa-briefcase hidden-xs"></i> <?php lang('job'); ?></th>
-            <th data-priority="2"><i class="fa fa-fw fa-play hidden-xs"></i> <?php lang('start'); ?></th>
-            <th data-priority="2"><i class="fa fa-fw fa-stop hidden-xs"></i> <?php lang('end'); ?></th>
-            <th data-priority="3"><i class="fa fa-fw fa-user hidden-xs"></i> <?php lang('user'); ?></th>
+            <th data-priority="1"><i class="fas fa-fw fa-briefcase d-none d-md-inline"></i> <?php lang('job'); ?></th>
+            <th data-priority="2"><i class="fas fa-fw fa-play d-none d-md-inline"></i> <?php lang('start'); ?></th>
+            <th data-priority="2"><i class="fas fa-fw fa-stop d-none d-md-inline"></i> <?php lang('end'); ?></th>
+            <th data-priority="3"><i class="fas fa-fw fa-user d-none d-md-inline"></i> <?php lang('user'); ?></th>
         </tr>
     </tfoot>
 </table>

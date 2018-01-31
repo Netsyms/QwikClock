@@ -106,12 +106,12 @@ for ($i = 0; $i < count($punches); $i++) {
     $punches[$i][0] = "";
     if ($_SESSION['uid'] == $punches[$i]['uid']) {
         if ($editself) {
-            $punches[$i][1] = '<a class="btn btn-blue btn-xs" href="app.php?page=editpunch&pid=' . $punches[$i]['punchid'] . '"><i class="fa fa-pencil-square-o"></i> ' . lang("edit", false) . '</a>';
+            $punches[$i][1] = '<a class="btn btn-blue btn-sm" href="app.php?page=editpunch&pid=' . $punches[$i]['punchid'] . '"><i class="fas fa-edit"></i> ' . lang("edit", false) . '</a>';
         } else {
             $punches[$i][1] = "";
         }
     } else if ($showmanaged) {
-        $punches[$i][1] = '<a class="btn btn-blue btn-xs" href="app.php?page=editpunch&pid=' . $punches[$i]['punchid'] . '"><i class="fa fa-pencil-square-o"></i> ' . lang("edit", false) . '</a>';
+        $punches[$i][1] = '<a class="btn btn-blue btn-sm" href="app.php?page=editpunch&pid=' . $punches[$i]['punchid'] . '"><i class="fas fa-edit"></i> ' . lang("edit", false) . '</a>';
     } else {
         $punches[$i][1] = "";
     }

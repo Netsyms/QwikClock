@@ -30,31 +30,29 @@ if (isset($VARS['job']) && $database->has('jobs', ['jobid' => $VARS['job']])) {
 ?>
 
 <form role="form" action="action.php" method="POST">
-    <div class="panel panel-blue">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                <?php if ($editing) { ?>
-                    <i class="fa fa-pencil"></i> <?php lang("edit job"); ?>
-                <?php } else { ?>
-                    <i class="fa fa-plus"></i> <?php lang("new job"); ?>
-                <?php } ?>
-            </h3>
-        </div>
-        <div class="panel-body">
+    <div class="card border-blue">
+        <h3 class="card-header text-blue">
+            <?php if ($editing) { ?>
+                <i class="fas fa-edit"></i> <?php lang("edit job"); ?>
+            <?php } else { ?>
+                <i class="fas fa-plus"></i> <?php lang("new job"); ?>
+            <?php } ?>
+        </h3>
+        <div class="card-body">
             <div class="row">
-                <div class="col-xs-12 col-md-6">
+                <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label for="jobname"><i class="fa fa-briefcase"></i> <?php lang("name"); ?></label>
                         <input type="text" class="form-control" name="jobname" id="jobname" required="required" value="<?php echo $data['jobname']; ?>" />
                     </div>
                 </div>
-                <div class="col-xs-12 col-md-6">
+                <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label for="jobcode"><i class="fa fa-barcode"></i> <?php lang("code"); ?></label>
                         <input type="text" class="form-control" name="jobcode" id="jobcode" value="<?php echo $data['jobcode']; ?>" />
                     </div>
                 </div>
-                <div class="col-xs-12 col-md-6">
+                <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label for="color"><i class="fa fa-paint-brush"></i> <?php lang("color"); ?></label>
                         <?php
@@ -83,10 +81,9 @@ if (isset($VARS['job']) && $database->has('jobs', ['jobid' => $VARS['job']])) {
                         </select>
                     </div>
                 </div>
-                <div class="col-xs-12 col-md-6">
+                <div class="col-12 col-md-6">
                     <label for="groups-box"><i class="fa fa-object-group"></i> <?php lang("visible to groups"); ?></label><br />
-                    <div class="row">
-                        <div class="col-xs-8 col-sm-10 col-md-9 col-lg-10">
+                    <div class="input-group">
                             <select id="groups-box" class="form-control">
                                 <option value=""><?php lang("choose a group"); ?></option>
                                 <option value="-1"><?php lang("all groups"); ?></option>
@@ -115,12 +112,11 @@ if (isset($VARS['job']) && $database->has('jobs', ['jobid' => $VARS['job']])) {
                                 }
                                 ?>
                             </select>
-                        </div>
-                        <div class="col-xs-4 col-sm-2 col-md-3 col-lg-2">
-                            <button class="btn btn-default" type="button" id="addgroupbtn"><i class="fa fa-plus"></i> <?php lang("add") ?></button>
+                        <div class="input-group-append">
+                            <button class="btn btn-default" type="button" id="addgroupbtn"><i class="fas fa-plus"></i> <?php lang("add") ?></button>
                         </div>
                     </div>
-                    <div class="panel" id="groupslist-panel">
+                    <div class="card" id="groupslist-panel">
                         <div class="list-group" id="groupslist">
                             <?php
                             $groups = $database->select('job_groups', ['groupid (id)'], ['jobid' => $data['jobid']]);
@@ -132,7 +128,7 @@ if (isset($VARS['job']) && $database->has('jobs', ['jobid' => $VARS['job']])) {
                                 }
                                 ?>
                                 <div class="list-group-item" data-groupid="<?php echo $g['id']; ?>">
-                                    <?php echo $g['name']; ?> <div class="btn btn-danger btn-sm pull-right rm"><i class="fa fa-trash-o"></i></div><input type="hidden" name="groups[]" value="<?php echo $g['id']; ?>" />
+                                    <?php echo $g['name']; ?> <div class="btn btn-danger btn-sm float-right rm"><i class="fas fa-trash"></i></div><input type="hidden" name="groups[]" value="<?php echo $g['id']; ?>" />
                                 </div>
                                 <?php
                             }
@@ -147,12 +143,12 @@ if (isset($VARS['job']) && $database->has('jobs', ['jobid' => $VARS['job']])) {
         <input type="hidden" name="action" value="editjob" />
         <input type="hidden" name="source" value="editjobs" />
 
-        <div class="panel-footer">
-            <button type="submit" class="btn btn-success"><i class="fa fa-floppy-o"></i> <?php lang("save"); ?></button>
+        <div class="card-footer d-flex">
+            <button type="submit" class="btn btn-success mr-auto"><i class="fas fa-save"></i> <?php lang("save"); ?></button>
             <?php
             if ($editing && account_has_permission($_SESSION['username'], "QWIKCLOCK_ADMIN")) {
                 ?>
-                <a href="action.php?action=deletejob&source=editjobs&jobid=<?php echo $data['jobid']; ?>" class="btn btn-danger btn-xs pull-right mgn-top-8px"><i class="fa fa-times"></i> <?php lang('delete'); ?></a>
+                <a href="action.php?action=deletejob&source=editjobs&jobid=<?php echo $data['jobid']; ?>" class="btn btn-danger"><i class="fas fa-times"></i> <?php lang('delete'); ?></a>
                 <?php
             }
             ?>

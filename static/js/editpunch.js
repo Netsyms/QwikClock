@@ -32,10 +32,22 @@ $("#user").easyAutocomplete(options);
 $(function () {
     $('#in').datetimepicker({
         format: "ddd MMMM D YYYY h:mm a",
-        useCurrent: false
+        useCurrent: false,
+        icons: {
+            time: "fas fa-clock",
+            date: "fas fa-calendar",
+            up: "fas fa-arrow-up",
+            down: "fas fa-arrow-down"
+        }
     });
     $('#out').datetimepicker({
         format: "ddd MMMM D YYYY h:mm a",
-        useCurrent: false
+        useCurrent: false,
+        icons: {
+            time: "fas fa-clock",
+            date: "fas fa-calendar",
+            up: "fas fa-arrow-up",
+            down: "fas fa-arrow-down"
+        }
     });
 });

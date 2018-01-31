@@ -30,21 +30,19 @@ if (isset($VARS['job']) && $database->has('job_tracking', ['id' => $VARS['job']]
 ?>
 
 <form role="form" action="action.php" method="POST">
-    <div class="panel panel-blue">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                <?php if ($editing) { ?>
-                    <i class="fa fa-pencil"></i> <?php lang("edit job"); ?>
-                <?php } else { ?>
-                    <i class="fa fa-plus"></i> <?php lang("new job"); ?>
-                <?php } ?>
-            </h3>
-        </div>
-        <div class="panel-body">
+    <div class="card border-blue">
+        <h3 class="card-header text-blue">
+            <?php if ($editing) { ?>
+                <i class="fas fa-edit"></i> <?php lang("edit job"); ?>
+            <?php } else { ?>
+                <i class="fas fa-plus"></i> <?php lang("new job"); ?>
+            <?php } ?>
+        </h3>
+        <div class="card-body">
             <div class="row">
-                <div class="col-xs-12 col-md-6">
+                <div class="col-12 col-md-6 col-lg-4 col-xl-4">
                     <div class="form-group">
-                        <label for="job"><i class="fa fa-briefcase"></i> <?php lang("job"); ?></label>
+                        <label for="job"><i class="fas fa-briefcase"></i> <?php lang("job"); ?></label>
                         <select class="form-control" name="job" required>
                             <option></option>
                             <?php
@@ -63,23 +61,23 @@ if (isset($VARS['job']) && $database->has('job_tracking', ['id' => $VARS['job']]
 
                             foreach ($jobs as $job) {
                                 ?>
-                            <option value="<?php echo $job['jobid']; ?>"<?php echo ($job['jobid'] == $data['jobid'] ? " selected" : ""); ?>><?php echo $job['jobname']; ?></option>
+                                <option value="<?php echo $job['jobid']; ?>"<?php echo ($job['jobid'] == $data['jobid'] ? " selected" : ""); ?>><?php echo $job['jobname']; ?></option>
                                 <?php
                             }
                             ?>
                         </select>
                     </div>
                 </div>
-                <div class="col-xs-12 col-md-6">
+                <div class="col-12 col-md-6 col-lg-4 col-xl-4">
                     <div class="form-group">
-                        <label for="start"><i class="fa fa-play"></i> <?php lang("start"); ?></label>
-                        <input type="text" class="form-control" name="start" id="start" value="<?php echo is_empty($data['start']) ? "" : date("D F j Y g:i a", strtotime($data['start'])); ?>" required />
+                        <label for="start"><i class="fas fa-play"></i> <?php lang("start"); ?></label>
+                        <input type="text" class="form-control" name="start" id="start" data-toggle="datetimepicker" data-target="#start" value="<?php echo is_empty($data['start']) ? "" : date("D F j Y g:i a", strtotime($data['start'])); ?>" required />
                     </div>
                 </div>
-                <div class="col-xs-12 col-md-6">
+                <div class="col-12 col-md-6 col-lg-4 col-xl-4">
                     <div class="form-group">
-                        <label for="end"><i class="fa fa-stop"></i> <?php lang("end"); ?></label>
-                        <input type="text" class="form-control" name="end" id="end" value="<?php echo is_empty($data['end']) ? "" : date("D F j Y g:i a", strtotime($data['end'])); ?>" />
+                        <label for="end"><i class="fas fa-stop"></i> <?php lang("end"); ?></label>
+                        <input type="text" class="form-control" name="end" id="end" data-toggle="datetimepicker" data-target="#end" value="<?php echo is_empty($data['end']) ? "" : date("D F j Y g:i a", strtotime($data['end'])); ?>" />
                     </div>
                 </div>
             </div>
@@ -89,12 +87,12 @@ if (isset($VARS['job']) && $database->has('job_tracking', ['id' => $VARS['job']]
         <input type="hidden" name="action" value="editjobhistory" />
         <input type="hidden" name="source" value="jobs" />
 
-        <div class="panel-footer">
-            <button type="submit" class="btn btn-success"><i class="fa fa-floppy-o"></i> <?php lang("save"); ?></button>
+        <div class="card-footer d-flex">
+            <button type="submit" class="btn btn-success mr-auto"><i class="fas fa-save"></i> <?php lang("save"); ?></button>
             <?php
             if ($editing) {
                 ?>
-                <a href="action.php?action=deletejobhistory&source=jobs&jobid=<?php echo $VARS['job']; ?>" class="btn btn-danger btn-xs pull-right mgn-top-8px"><i class="fa fa-times"></i> <?php lang('delete'); ?></a>
+                <a href="action.php?action=deletejobhistory&source=jobs&jobid=<?php echo $VARS['job']; ?>" class="btn btn-danger"><i class="fas fa-times"></i> <?php lang('delete'); ?></a>
                 <?php
             }
             ?>

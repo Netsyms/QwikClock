@@ -19,33 +19,31 @@ foreach ($punches as $p) {
 $totalseconds = sumelapsedtimearray($punchtimes);
 $totalpunches = count($punches);
 ?>
-<p class="page-header h5"><i class="fa fa-calendar fa-fw"></i> <?php lang("this week") ?></p>
-<div class="row">
-
-    <div class="col-xs-12 col-sm-6 col-md-4 col-md-offset-2">
-        <div class="panel panel-blue">
-            <div class="panel-body">
-                <h4>
-                    <?php
-                    lang2("x on the clock", ["time" => seconds2string($totalseconds, false)]);
-                    ?>
-                </h4>
+<h2 class="mb-4"><i class="fas fa-calendar fa-fw"></i> <?php lang("this week") ?></h2>
+<div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+        <div class="card-deck">
+            <div class="card bg-light-blue text-light">
+                <div class="card-body text-center">
+                    <h4>
+                        <?php
+                        lang2("x on the clock", ["time" => seconds2string($totalseconds, false)]);
+                        ?>
+                    </h4>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <div class="col-xs-12 col-sm-6 col-md-4">
-        <div class="panel panel-blue">
-            <div class="panel-body">
-                <h4>
-                    <?php
-                    if ($totalpunches != 1) {
-                        lang2("x punches", ["count" => $totalpunches]);
-                    } else {
-                        lang("1 punch");
-                    }
-                    ?>
-                </h4>
+            <div class="card bg-cyan text-light">
+                <div class="card-body text-center">
+                    <h4>
+                        <?php
+                        if ($totalpunches != 1) {
+                            lang2("x punches", ["count" => $totalpunches]);
+                        } else {
+                            lang("1 punch");
+                        }
+                        ?>
+                    </h4>
+                </div>
             </div>
         </div>
     </div>
@@ -53,16 +51,16 @@ $totalpunches = count($punches);
 
 <a id="punches">&nbsp;</a>
 
-<p class="page-header h5"><i class="fa fa-clock-o fa-fw"></i> <?php lang("punch card") ?></p>
-<table id="punchtable" class="table table-bordered table-striped">
+<h2 class="mb-4 mt-4"><i class="fas fa-clock fa-fw"></i> <?php lang("punch card") ?></h2>
+<table id="punchtable" class="table table-bordered table-hover table-sm">
     <thead>
         <tr>
             <th data-priority="0"></th>
             <th data-priority="1"><?php lang('actions'); ?></th>
-            <th data-priority="2"><i class="fa fa-fw fa-user hidden-xs"></i> <?php lang('name'); ?></th>
-            <th data-priority="1"><i class="fa fa-fw fa-play hidden-xs"></i> <?php lang('in'); ?></th>
-            <th data-priority="1"><i class="fa fa-fw fa-stop hidden-xs"></i> <?php lang('out'); ?></th>
-            <th data-priority="2"><i class="fa fa-fw fa-sticky-note-o hidden-xs"></i> <?php lang('notes'); ?></th>
+            <th data-priority="2"><i class="fas fa-fw fa-user hidden-xs"></i> <?php lang('name'); ?></th>
+            <th data-priority="1"><i class="fas fa-fw fa-play hidden-xs"></i> <?php lang('in'); ?></th>
+            <th data-priority="1"><i class="fas fa-fw fa-stop hidden-xs"></i> <?php lang('out'); ?></th>
+            <th data-priority="2"><i class="fas fa-fw fa-sticky-note hidden-xs"></i> <?php lang('notes'); ?></th>
         </tr>
     </thead>
     <tbody>
@@ -72,10 +70,10 @@ $totalpunches = count($punches);
         <tr>
             <th data-priority="0"></th>
             <th data-priority="1"><?php lang('actions'); ?></th>
-            <th data-priority="2"><i class="fa fa-fw fa-user hidden-xs"></i> <?php lang('name'); ?></th>
-            <th data-priority="1"><i class="fa fa-fw fa-play hidden-xs"></i> <?php lang('in'); ?></th>
-            <th data-priority="1"><i class="fa fa-fw fa-stop hidden-xs"></i> <?php lang('out'); ?></th>
-            <th data-priority="2"><i class="fa fa-fw fa-sticky-note-o hidden-xs"></i> <?php lang('notes'); ?></th>
+            <th data-priority="2"><i class="fas fa-fw fa-user hidden-xs"></i> <?php lang('name'); ?></th>
+            <th data-priority="1"><i class="fas fa-fw fa-play hidden-xs"></i> <?php lang('in'); ?></th>
+            <th data-priority="1"><i class="fas fa-fw fa-stop hidden-xs"></i> <?php lang('out'); ?></th>
+            <th data-priority="2"><i class="fas fa-fw fa-sticky-note hidden-xs"></i> <?php lang('notes'); ?></th>
         </tr>
     </tfoot>
 </table>

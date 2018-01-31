@@ -37,7 +37,6 @@ redirectifnotloggedin();
                 $in = $database->has('punches', ['AND' => ['uid' => $_SESSION['uid'], 'out' => null]]) === TRUE;
                 ?>
                 <h5 class="card-subtitle mb-2 ml-4">
-
                     <span id="inmsg"><?php lang("you are punched in"); ?></span>
                     <span id="outmsg"><?php lang("you are not punched in"); ?></span>
                     <style nonce="<?php echo $SECURE_NONCE; ?>">

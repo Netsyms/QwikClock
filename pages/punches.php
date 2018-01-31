@@ -57,10 +57,10 @@ $totalpunches = count($punches);
         <tr>
             <th data-priority="0"></th>
             <th data-priority="1"><?php lang('actions'); ?></th>
-            <th data-priority="2"><i class="fas fa-fw fa-user hidden-xs"></i> <?php lang('name'); ?></th>
-            <th data-priority="1"><i class="fas fa-fw fa-play hidden-xs"></i> <?php lang('in'); ?></th>
-            <th data-priority="1"><i class="fas fa-fw fa-stop hidden-xs"></i> <?php lang('out'); ?></th>
-            <th data-priority="2"><i class="fas fa-fw fa-sticky-note hidden-xs"></i> <?php lang('notes'); ?></th>
+            <th data-priority="2"><i class="fas fa-fw fa-user d-none d-md-inline"></i> <?php lang('name'); ?></th>
+            <th data-priority="1"><i class="fas fa-fw fa-play d-none d-md-inline"></i> <?php lang('in'); ?></th>
+            <th data-priority="1"><i class="fas fa-fw fa-stop d-none d-md-inline"></i> <?php lang('out'); ?></th>
+            <th data-priority="2"><i class="fas fa-fw fa-sticky-note d-none d-md-inline"></i> <?php lang('notes'); ?></th>
         </tr>
     </thead>
     <tbody>
@@ -70,10 +70,10 @@ $totalpunches = count($punches);
         <tr>
             <th data-priority="0"></th>
             <th data-priority="1"><?php lang('actions'); ?></th>
-            <th data-priority="2"><i class="fas fa-fw fa-user hidden-xs"></i> <?php lang('name'); ?></th>
-            <th data-priority="1"><i class="fas fa-fw fa-play hidden-xs"></i> <?php lang('in'); ?></th>
-            <th data-priority="1"><i class="fas fa-fw fa-stop hidden-xs"></i> <?php lang('out'); ?></th>
-            <th data-priority="2"><i class="fas fa-fw fa-sticky-note hidden-xs"></i> <?php lang('notes'); ?></th>
+            <th data-priority="2"><i class="fas fa-fw fa-user d-none d-md-inline"></i> <?php lang('name'); ?></th>
+            <th data-priority="1"><i class="fas fa-fw fa-play d-none d-md-inline"></i> <?php lang('in'); ?></th>
+            <th data-priority="1"><i class="fas fa-fw fa-stop d-none d-md-inline"></i> <?php lang('out'); ?></th>
+            <th data-priority="2"><i class="fas fa-fw fa-sticky-note d-none d-md-inline"></i> <?php lang('notes'); ?></th>
         </tr>
     </tfoot>
 </table>

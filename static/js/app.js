@@ -28,3 +28,8 @@ function getniceurl() {
     url = url.replace(/&?msg=([^&]$|[^&]*)/i, "");
     return url;
 }
+try {
+    window.history.replaceState("", "", getniceurl());
+} catch (ex) {
+
+}

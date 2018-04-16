@@ -20,20 +20,12 @@ define("DB_CHARSET", "utf8");
 // Name of the app.
 define("SITE_TITLE", "QwikClock");
 
-// Which pages to show the app icon on:
-// index, app, both, none
-define("SHOW_ICON", "both");
-// Where to put the icon: top or menu
-// Overridden to 'menu' if MENU_BAR_STYLE is 'fixed'.
-define("ICON_POSITION", "menu");
-// App menu bar style: fixed or static
-define("MENU_BAR_STYLE", "fixed");
 
-// URL of the Business Portal API endpoint
+// URL of the AccountHub API endpoint
 define("PORTAL_API", "http://localhost/accounthub/api.php");
-// URL of the Portal home page
+// URL of the AccountHub home page
 define("PORTAL_URL", "http://localhost/accounthub/home.php");
-// Business Portal API Key
+// AccountHub API Key
 define("PORTAL_KEY", "123");
 
 // For supported values, see http://php.net/manual/en/timezones.php
@@ -54,13 +46,12 @@ define("DATE_FORMAT", "M j, Y");
 define("LONG_DATE_FORMAT", "l F j");
 
 // Base URL for site links.
-define('URL', 'http://localhost/qwikclock');
+define('URL', '.');
 
-// Use reCAPTCHA on login screen
-// https://www.google.com/recaptcha/
-define("RECAPTCHA_ENABLED", FALSE);
-define('RECAPTCHA_SITE_KEY', '');
-define('RECAPTCHA_SECRET_KEY', '');
+// Use Captcheck on login screen
+// https://captcheck.netsyms.com
+define("CAPTCHA_ENABLED", FALSE);
+define('CAPTCHA_SERVER', 'https://captcheck.netsyms.com');
 
 // See lang folder for language options
 define('LANGUAGE', "en_us");

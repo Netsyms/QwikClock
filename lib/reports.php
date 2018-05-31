@@ -43,15 +43,17 @@ if (isset($VARS['code']) && LOADED) {
     $requester = $_SESSION['uid'];
 }
 
-if (account_has_permission($_SESSION['username'], "ADMIN")) {
+$requesterusername = getUserByID($requester)['uid'];
+
+if (account_has_permission($requesterusername, "ADMIN")) {
     $allowed_users = true;
 } else {
-    if (account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE")) {
+    if (account_has_permission($requesterusername, "QWIKCLOCK_MANAGE")) {
         $allowed_users = getManagedUIDs($requester);
     }
 
-    if (account_has_permission($_SESSION['username'], "QWIKCLOCK_EDITSELF")) {
-        $allowed_users[] = $_SESSION['uid'];
+    if (account_has_permission($requesterusername, "QWIKCLOCK_EDITSELF")) {
+        $allowed_users[] = $requester;
     }
 }
 

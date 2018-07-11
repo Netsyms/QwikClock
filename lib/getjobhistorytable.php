@@ -14,7 +14,7 @@ require_once __DIR__ . "/login.php";
 require_once __DIR__ . "/userinfo.php";
 
 $account_is_admin = account_has_permission($_SESSION['username'], "QWIKCLOCK_ADMIN");
-$showmanaged = ($VARS['show_all'] == 1 && (account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE") || $account_is_admin));
+$showmanaged = (!empty($VARS['show_all']) && $VARS['show_all'] == 1 && (account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE") || $account_is_admin));
 $managed_uids = [];
 $managed_uids[] = $_SESSION['uid'];
 if ($showmanaged) {

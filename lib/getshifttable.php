@@ -14,7 +14,7 @@ header("Content-Type: application/json");
 require_once __DIR__ . "/login.php";
 require_once __DIR__ . "/userinfo.php";
 
-$showall = ($VARS['show_all'] == 1); // && account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE"));
+$showall = (!empty($VARS['show_all']) && $VARS['show_all'] == 1); // && account_has_permission($_SESSION['username'], "QWIKCLOCK_MANAGE"));
 
 $showmanaged = false;
 $managed_uids = [];
